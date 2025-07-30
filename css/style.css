@@ -303,23 +303,34 @@ header .scroll-to-fixed-fixed {
     color: #09152f;
 }
 
-header .container {
-    max-width: 100% !important;
-    padding: 0 !important;
-    margin: 0 !important;
-}
-
 html, body {
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* Prevent horizontal scroll caused by overflow */
+    overflow-x: hidden;
 }
 
-.header-nav .row {
-    margin: 0 !important; /* Remove negative margins from Bootstrap rows */
-    width: 100% !important;
+/* Fix Bootstrap container padding issue */
+header .container,
+header .container-fluid {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    margin: 0 auto;
 }
 
+/* Fix Bootstrap row negative margins */
+header .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+/* Force header background to fill entire width */
+header {
+    display: block;
+    width: 100%;
+    background-color: rgba(9, 21, 47, 0.85);
+}
 
 /* ===================================== Slide Style CSS ================================== */
 header {
