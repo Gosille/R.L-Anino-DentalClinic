@@ -243,32 +243,36 @@ body {
 
     <!-- ################# Header Starts Here#######################--->
     
-    <header>
-  <div class="header-nav">
-    <!-- Logo and Name -->
-    <div class="header-left">
-      <img src="images/MainL.png" alt="Logo">
-      <span>Dental Clinic</span>
+    
+      <header id="menu-jk">
+  <div id="nav-head" class="header-nav" style="background-color: rgba(9, 21, 47, 0.85); padding: 10px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+    <div class="container">
+      <div class="row align-items-center justify-content-between">
+
+        <!-- Logo and Name -->
+        <div class="col-lg-4 col-md-5 col-sm-12 d-flex align-items-center">
+          <img src="images/MainL.png" alt="Logo" style="height: 50px; margin-right: 12px;">
+          <span style="color:#ffffff; font-weight:700; font-size:28px; font-family:'Segoe UI', sans-serif;">Dental Clinic</span>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="col-lg-5 col-md-6 d-none d-md-block">
+          <ul style="margin: 0; padding: 0; list-style: none; display: flex; gap: 25px; justify-content: center;">
+            <li><a href="#" style="color:white; text-decoration:none; font-size:16px; font-weight:500; transition: 0.3s;" onmouseover="this.style.color='#00d4ff'" onmouseout="this.style.color='white'">Home</a></li>
+            <li><a href="#about_us" style="color:white; text-decoration:none; font-size:16px; font-weight:500; transition: 0.3s;" onmouseover="this.style.color='#00d4ff'" onmouseout="this.style.color='white'">About Us</a></li>
+            <li><a href="#gallery" style="color:white; text-decoration:none; font-size:16px; font-weight:500; transition: 0.3s;" onmouseover="this.style.color='#00d4ff'" onmouseout="this.style.color='white'">Gallery</a></li>
+            <li><a href="#contact_us" style="color:white; text-decoration:none; font-size:16px; font-weight:500; transition: 0.3s;" onmouseover="this.style.color='#00d4ff'" onmouseout="this.style.color='white'">Contact Us</a></li>
+            <li><a href="#logins" style="color:white; text-decoration:none; font-size:16px; font-weight:500; transition: 0.3s;" onmouseover="this.style.color='#00d4ff'" onmouseout="this.style.color='white'">Logins</a></li>
+          </ul>
+        </div>
+
+        <!-- Button -->
+        <div class="col-lg-3 d-none d-lg-block text-end">
+          <a class="btn" style="background-color:#00d4ff; color:#09152f; font-weight:600; border-radius:20px; padding: 8px 20px;" href="hms/user-login.html">Book Appointment</a>
+        </div>
+
+      </div>
     </div>
-
-    <!-- Hamburger for mobile -->
-    <div class="hamburger" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-
-    <!-- Navigation Menu -->
-    <ul class="nav-links" id="menu">
-      <li><a href="#">Home</a></li>
-      <li><a href="#about_us">About Us</a></li>
-      <li><a href="#gallery">Gallery</a></li>
-      <li><a href="#contact_us">Contact Us</a></li>
-      <li><a href="#logins">Logins</a></li>
-    </ul>
-
-    <!-- Book Appointment Button -->
-    <a href="hms/user-login.html" class="book-btn">Book Appointment</a>
   </div>
 </header>
     
