@@ -9485,7 +9485,7 @@ legend,
 /* Add logo icon inside the text */
 .main-login .logo h2::before {
   content: '';
-  background: url('../assets/images/MLogo.png') no-repeat center center;
+  background: url('../assets/images/MLogo.png');
   background-size: contain;
   width: 45px;
   height: 45px;
