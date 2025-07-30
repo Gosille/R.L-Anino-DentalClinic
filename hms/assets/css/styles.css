@@ -71,19 +71,19 @@ body {
   -webkit-font-smoothing: antialiased !important;
 }
 body.bg_style_1 {
-  background: url("../images/bg.png") transparent !important;
+  background: url("assets/images/bg.png") transparent !important;
 }
 body.bg_style_2 {
-  background: url("../images/bg_2.png") transparent !important;
+  background: url("assets/images/bg_2.png") transparent !important;
 }
 body.bg_style_3 {
-  background: url("../images/bg_3.png") transparent !important;
+  background: url("assets/images/bg_3.png") transparent !important;
 }
 body.bg_style_4 {
-  background: url("../images/bg_4.png") transparent !important;
+  background: url("assets/images/bg_4.png") transparent !important;
 }
 body.bg_style_5 {
-  background: url("../images/bg_5.png") transparent !important;
+  background: url("assets/images/bg_5.png") transparent !important;
 }
 
 ::-moz-selection {
@@ -3868,7 +3868,7 @@ a.text-light:hover {
   border: none;
 }
 .panel-note .panel-heading {
-  background: url("../images/note_dot.png") repeat-x;
+  background: url("assets/images/note_dot.png") repeat-x;
   border-bottom: 0 none;
   padding-top: 30px;
   padding-bottom: 10px;
@@ -3880,7 +3880,7 @@ a.text-light:hover {
   margin: 0;
 }
 .panel-note .panel-body {
-  background: url("../images/line.png") repeat;
+  background: url("assets/images/line.png") repeat;
   padding: 0;
   margin: 0 15px;
   line-height: 18px;
@@ -4876,7 +4876,7 @@ textarea.autosize.area-animated:focus {
   background: #ffffff;
 }
 .note-editor textarea {
-  background: url("../images/line_detail.png") repeat;
+  background: url("assets/images/line_detail.png") repeat;
   line-height: 20px;
   margin-top: 10px;
   min-height: 140px;
@@ -4888,7 +4888,7 @@ textarea.autosize.area-animated:focus {
   background-color: #ffffff !important;
 }
 .note-editor:before {
-  background: url("../images/note_dot.png") repeat-x;
+  background: url("assets/images/note_dot.png") repeat-x;
   position: absolute;
   height: 12px;
   top: 0;
@@ -9485,7 +9485,7 @@ legend,
 /* Add logo icon inside the text */
 .main-login .logo h2::before {
   content: '';
-  background: url('../images/MLogo.png') no-repeat center center;
+  background: url('assets/images/MLogo.png') no-repeat center center;
   background-size: contain;
   width: 45px;
   height: 45px;
