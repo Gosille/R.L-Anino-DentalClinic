@@ -9373,6 +9373,7 @@ body.login, html {
     align-items: center;
     height: 100vh;
     width: 100%;
+    margin: 0;
 }
 
 /* Main login box */
@@ -9385,10 +9386,15 @@ body.login, html {
     text-align: center;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
     border: 2px solid transparent;
-    animation: fadeIn 0.8s ease-in-out;
 }
 
 /* Hover glow effect */
+.main-login:hover {
+    border: 2px solid #1f8fff;
+    box-shadow: 0 0 15px #1f8fff, 0 0 30px #1f8fff;
+}
+
+/* Neon Hover Effect */
 .main-login:hover {
     border: 2px solid #1f8fff;
     box-shadow: 0 0 15px #1f8fff, 0 0 30px #1f8fff;
@@ -9402,15 +9408,20 @@ body.login, html {
     gap: 12px;
     margin-bottom: 20px;
 }
-
 .main-login .logo img {
     height: 50px;
 }
-
 .main-login .logo h2 {
     font-size: 20px;
     margin: 0;
     color: #ffffff;
+}
+
+/* Form */
+legend,
+.main-login p {
+    color: #cfd8e3;
+    font-size: 14px;
 }
 
 /* Inputs */
@@ -9423,13 +9434,11 @@ body.login, html {
     margin-bottom: 15px;
     transition: all 0.3s ease;
 }
-
 .form-control:focus {
     border-color: #1f8fff;
     box-shadow: 0 0 8px #1f8fff;
     outline: none;
 }
-
 .form-control::placeholder {
     color: #b0b8c7;
 }
@@ -9445,7 +9454,6 @@ body.login, html {
     font-weight: bold;
     transition: 0.3s ease;
 }
-
 .btn-primary:hover {
     background: #0f6ad1;
     transform: scale(1.05);
@@ -9458,7 +9466,6 @@ body.login, html {
     color: #7db9ff;
     transition: 0.3s ease;
 }
-
 .links a:hover {
     color: #ffffff;
 }
@@ -9476,14 +9483,20 @@ body.login, html {
     100% { opacity: 1; transform: translateY(0); }
 }
 
-/* Remove unnecessary pseudo-element for logo before */
+/* Add logo icon inside the text */
 .main-login .logo h2::before {
-    content: none; /* Disabled since you already use <img> */
+  content: '';
+  background: url('../images/MLogo.png') no-repeat center center;
+  background-size: contain;
+  width: 45px;
+  height: 45px;
+  display: inline-block;
+  margin-right: 10px;
 }
 
 /* Set background color */
 body.login {
-    background-color: #09152f;
+  background-color: #09152f;
 }
 
 /* ---------------------------------------------------------------------- */
