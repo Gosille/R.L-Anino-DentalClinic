@@ -205,16 +205,18 @@ a:hover {
 
 /* Button */
 .book-btn {
-  background: #00d4ff;
+  background-color: #00d4ff;
   color: #09152f;
   font-weight: bold;
-  padding: 8px 18px;
-  border-radius: 6px;
+  padding: 8px 20px;
+  border-radius: 20px;
   text-decoration: none;
+  transition: 0.3s;
+  font-size: 16px;
 }
 
 .book-btn:hover {
-  background: #fff;
+  background-color: #ffffff;
   color: #09152f;
 }
 
