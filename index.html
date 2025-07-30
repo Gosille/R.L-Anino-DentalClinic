@@ -1,79 +1,766 @@
 
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-	<head>
-		<title>User-Login</title>
-		
-		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
-		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" href="vendor/fontawesome/css/font-awesome.min.css">
-		<link rel="stylesheet" href="vendor/themify-icons/themify-icons.min.css">
-		<link href="vendor/animate.css/animate.min.css" rel="stylesheet" media="screen">
-		<link href="vendor/perfect-scrollbar/perfect-scrollbar.min.css" rel="stylesheet" media="screen">
-		<link href="vendor/switchery/switchery.min.css" rel="stylesheet" media="screen">
-		<link rel="stylesheet" href="assets/css/styles.css">
-		<link rel="stylesheet" href="assets/css/plugins.css">
-		<link rel="shortcut icon" href="assets/images/MLogo.png">
-		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
-	</head>
-	<body class="login">
-    <div class="login-wrapper">
-        <div class="main-login">
-            <!-- Logo -->
-            <div class="logo">
-           <a href="../../index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: white;">
-           <img src="assets/images/MLogo.png" alt="Logo">
-           <h2 style="margin: 0; font-size: 20px;">RLA Dental | Patient Login</h2>
-                 </a>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>R.L Anino Dental Clinic</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="shortcut icon" href="images/fav.jpg">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/fontawsom-all.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="shortcut icon" href="images/MLogo.png">
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" href="css/style.css">
+    <style type="text/css">
+
+       
+    
+.chat-bar-collapsible {
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    box-shadow: 0 8px 16px rgba(224, 224, 230, 0.98);
+    z-index: 9999;
+    width: 100%;
+    max-width: 350px;
+}
+
+/* Collapsible Header */
+.collapsible {
+    background-color: rgba(30, 76, 145, 1);
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 10px 10px 0 0;
+    border: 3px solid white;
+    border-bottom: none;
+    outline: none;
+    transition: background-color 0.3s ease;
+}
+
+.collapsible:hover {
+    background-color: rgba(30, 76, 145, 0.8);
+}
+
+/* Collapsible Content */
+.content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out;
+    background-color: rgba(241, 241, 245, 0.93);
+}
+
+.collapsible.active + .content {
+    max-height: 600px; /* can also be handled dynamically in JS */
+}
+
+/* Chat Area */
+.full-chat-block {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(5px);
+    text-align: center;
+    overflow: hidden;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Outer container (holds everything) */
+.outer-container {
+    min-height: 300px;
+    position: relative;
+}
+
+/* Inner Chat Scroll Area */
+.chat-container {
+    max-height: 500px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    scroll-behavior: smooth;
+    hyphens: auto;
+    overflow-y: auto;
+    padding-bottom: 10px;
+}
+
+.chat-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 100, 120, 0.3);
+    border-radius: 5px;
+}
+
+/* Input Area */
+.chat-bar-input-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(96, 146, 179, 1);
+    border-radius: 10px 10px 0 0;
+    padding: 10px;
+    border-top: 2px solid white;
+}
+
+#userInput {
+    width: 75%;
+}
+
+.input-box {
+    border: none;
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 16px;
+    color: #000;
+    background-color: white;
+    outline: none;
+}
+
+/* Send Icons */
+.chat-bar-icons {
+    display: flex;
+    justify-content: space-evenly;
+    width: 25%;
+    font-size: 20px;
+    color: white;
+}
+
+.chat-bar-icons i {
+    cursor: pointer;
+    padding: 8px;
+    transition: transform 0.2s ease;
+}
+
+.chat-bar-icons i:hover {
+    transform: scale(1.1);
+    opacity: 0.85;
+}
+
+/* User & Bot Messages */
+.userText {
+    color: white;
+    font-family: Helvetica;
+    font-size: 16px;
+    text-align: right;
+    clear: both;
+}
+
+.userText span {
+    background: rgba(9, 49, 90, 0.85);
+    color: white;
+    padding: 10px;
+    margin-right: 10px;
+    display: inline-block;
+    border-radius: 8px;
+    border-bottom-right-radius: 2px;
+    max-width: 80%;
+    animation: floatup 0.5s forwards;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.botText {
+    color: #000;
+    font-family: Helvetica;
+    font-size: 16px;
+    text-align: left;
+}
+
+.botText span {
+    background: rgba(227, 227, 241, 1);
+    padding: 10px;
+    margin-left: 10px;
+    display: inline-block;
+    border-radius: 8px;
+    border-bottom-left-radius: 2px;
+    max-width: 80%;
+    animation: floatup 0.5s forwards;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Bubble animation */
+@keyframes floatup {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .chat-bar-collapsible {
+        right: 10px;
+        bottom: 10px;
+        max-width: 90%;
+    }
+
+    .collapsible {
+        font-size: 16px;
+    }
+
+    .chat-bar-input-block {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #userInput {
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
+    .chat-bar-icons {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+html {
+    scroll-behavior: smooth;
+    font-family: Helvetica, sans-serif, Arial;
+}
+
+body {
+    margin: 0;
+    background-color: #222;
+}
+
+    </style>
+</head>
+ 
+
+    <!-- ################# Header Starts Here#######################--->
+    
+      <header id="menu-jk">
+  <div id="nav-head" class="header-nav" style="background-color: rgba(9, 21, 47, 0.85); padding: 10px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+    <div class="container">
+      <div class="row align-items-center justify-content-between">
+
+        <!-- Logo and Name -->
+        <div class="col-lg-4 col-md-5 col-sm-12 d-flex align-items-center">
+          <img src="images/MainL.png" alt="Logo" style="height: 50px; margin-right: 12px;">
+          <span style="color:#ffffff; font-weight:700; font-size:28px; font-family:'Segoe UI', sans-serif;">Dental Clinic</span>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="col-lg-5 col-md-6 d-none d-md-block">
+          <ul style="margin: 0; padding: 0; list-style: none; display: flex; gap: 25px; justify-content: center;">
+            <li><a href="#" style="color:white; text-decoration:none; font-size:16px; font-weight:500; transition: 0.3s;" onmouseover="this.style.color='#00d4ff'" onmouseout="this.style.color='white'">Home</a></li>
+            <li><a href="#about_us" style="color:white; text-decoration:none; font-size:16px; font-weight:500; transition: 0.3s;" onmouseover="this.style.color='#00d4ff'" onmouseout="this.style.color='white'">About Us</a></li>
+            <li><a href="#gallery" style="color:white; text-decoration:none; font-size:16px; font-weight:500; transition: 0.3s;" onmouseover="this.style.color='#00d4ff'" onmouseout="this.style.color='white'">Gallery</a></li>
+            <li><a href="#contact_us" style="color:white; text-decoration:none; font-size:16px; font-weight:500; transition: 0.3s;" onmouseover="this.style.color='#00d4ff'" onmouseout="this.style.color='white'">Contact Us</a></li>
+            <li><a href="#logins" style="color:white; text-decoration:none; font-size:16px; font-weight:500; transition: 0.3s;" onmouseover="this.style.color='#00d4ff'" onmouseout="this.style.color='white'">Logins</a></li>
+          </ul>
+        </div>
+
+        <!-- Button -->
+        <div class="col-lg-3 d-none d-lg-block text-end">
+          <a class="btn" style="background-color:#00d4ff; color:#09152f; font-weight:600; border-radius:20px; padding: 8px 20px;" href="hms/user-login.html">Book Appointment</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</header>
+    
+     <!-- ################# Slider Starts Here#######################--->
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+<!-- Bootstrap Carousel -->
+<div class="slider-detail">
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+    </ol>
+
+    <!-- Slides -->
+    <div class="carousel-inner">
+
+      <div class="carousel-item active">
+        <img class="d-block w-100 carousel-img" src="images/Slider_1.jpg" alt="Slide 1">
+        <div class="carousel-caption d-none d-md-block">
+          <h5 class="animate__animated animate__fadeInUp">Welcome to R.L Anino Dental Clinic</h5>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <img class="d-block w-100 carousel-img" src="images/Slider_2.jpg" alt="Slide 2">
+        <div class="carousel-caption d-none d-md-block">
+          <h5 class="animate__animated animate__fadeInUp">Dental CLinic System</h5>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <img class="d-block w-100 carousel-img" src="images/Slider_3.jpg" alt="Slide 3">
+        <div class="carousel-caption d-none d-md-block">
+          <h5 class="animate__animated animate__fadeInUp">We have more available Dentist</h5>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <img class="d-block w-100 carousel-img" src="images/Slider_4.jpg" alt="Slide 4">
+        <div class="carousel-caption d-none d-md-block">
+          <h5 class="animate__animated animate__fadeInUp">Please don't hesitate to contact us</h5>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <img class="d-block w-100 carousel-img" src="images/slider_5.png" alt="Slide 5">
+        <div class="carousel-caption d-none d-md-block">
+          <h5 class="animate__animated animate__fadeInUp">We care for our Patient's Health</h5>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Controls -->
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+
+  </div>
+</div>
+
+<!-- Add jQuery and Bootstrap JS before </body> -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+  <!--  ************************* Logins ************************** -->
+    
+    
+    <section id="logins" class="our-blog container-fluid" style="background-color: rgba(9, 21, 47, 0.8); padding: 40px 0;">
+    <div class="container">
+        <div class="inner-title text-center">
+            <h2 style="color: white;">Logins</h2>
+        </div>
+        <div class="row blog-cont">
+            <div class="col-md-4 col-sm-6">
+                <div class="blog-single text-center">
+                    <img src="assets/images/Prefer_Pic/patient.jpg" alt="Patient Login" class="img-fluid login-img">
+                    <div class="blog-single-det">
+                        <h6 style="color: white;">Patient Login</h6>
+                        <a href="hms/user-login.html" target="_blank">
+                            <button class="btn btn-success btn-sm">Click Here</button>
+                        </a>
+                    </div>
                 </div>
-				
-            <!-- Login Form -->
-            <div class="box-login">
-                <form class="form-login" method="post">
-                    <fieldset>
-                        <legend>Sign in to your account</legend>
-                        <p>Please enter your email and password to log in.</p>
-                        <input type="email" class="form-control" name="username" placeholder="Email">
-                        <input type="password" class="form-control" name="password" placeholder="Password">
-                        <button type="submit" class="btn btn-primary" name="submit">Login</button>
-                        <div class="links">
-                            <a href="forgot-password.html">Forgot Password?</a>
-                            <a href="registration.html">Create an account</a>
-                        </div>
-                    </fieldset>
-                </form>
             </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="blog-single text-center">
+                    <img src="images/doctor.jpg" alt="Dentist Login" class="img-fluid login-img">
+                    <div class="blog-single-det">
+                        <h6 style="color: white;">Dentist Login</h6>
+                        <a href="hms/doctor/index.html" target="_blank">
+                            <button class="btn btn-success btn-sm">Click Here</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <div class="blog-single text-center">
+                    <img src="images/admin.jpg" alt="Admin Login" class="img-fluid login-img">
+                    <div class="blog-single-det">
+                        <h6 style="color: white;">Admin Login</h6>
+                        <a href="hms/admin/index.html" target="_blank">
+                            <button class="btn btn-success btn-sm">Click Here</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    
+    <!--  ************************* About Us Starts Here ************************** -->
+        
+  <section id="about_us" class="about-us-section">
+  <div class="about-us-container">
+    <div class="about-image-section"></div>
+    <div class="about-content-box">
+      <div class="content-inner">
+        <h3>About Our Dental Clinic</h3>
+        <p>
+          Welcome to our dental clinic! We are dedicated to providing you with top-quality dental
+          care in a comfortable and friendly environment.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
-            <!-- Footer -->
-            <div class="copyright">
-                <span>DENTAL Management System</span>
-			
-			</div>
-			
-		</div>
+    
+            <!--  ************************* Gallery Starts Here ************************** -->
+     
+     
+            <section id="gallery" class="gallery-section">
+  <div class="inner-title">
+    <h2>Our Gallery</h2>
+    <p>View Our Gallery</p>
+  </div>
 
-			</div>
-		</div>
+  <div class="gallery-grid">
+  <div class="gallery-item">
+    <img src="images/gallery_01.jpg" alt="Gallery" onclick="openLightbox(this)">
+  </div>
+  <div class="gallery-item">
+    <img src="images/gallery_02.jpg" alt="Gallery" onclick="openLightbox(this)">
+  </div>
+  <div class="gallery-item">
+    <img src="images/gallery_03.jpg" alt="Gallery" onclick="openLightbox(this)">
+  </div>
+ <div class="gallery-item">
+    <img src="images/gallery_04.jpg" alt="Gallery" onclick="openLightbox(this)">
+  </div>
+  <div class="gallery-item">
+    <img src="images/gallery_05.jpg" alt="Gallery" onclick="openLightbox(this)">
+  </div>
+</div>
 
-		<script src="vendor/jquery/jquery.min.js"></script>
-		<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-		<script src="vendor/modernizr/modernizr.js"></script>
-		<script src="vendor/jquery-cookie/jquery.cookie.js"></script>
-		<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-		<script src="vendor/switchery/switchery.min.js"></script>
-		<script src="vendor/jquery-validation/jquery.validate.min.js"></script>
-	
-		<script src="assets/js/main.js"></script>
+<!-- Lightbox Modal -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+  <span class="close">&times;</span>
+  <img class="lightbox-content" id="lightbox-img">
+</div>
+  </div>
+</section>
 
-		<script src="assets/js/login.js"></script>
-		<script>
-			jQuery(document).ready(function() {
-				Main.init();
-				Login.init();
-			});
-		</script>
-	
-	</body>
-	<!-- end: BODY -->
+
+        <!-- ######## Gallery End ####### -->
+    
+    
+     <!--  ************************* Contact Us Starts Here ************************** -->
+    
+    <section id="contact_us" class="contact-us-single">
+  <div class="row no-margin">
+    <div class="col-sm-12 cop-ck">
+      <form method="post">
+        <h2>Contact Form</h2>
+
+        <div class="row cf-ro">
+          <div class="col-sm-3"><label>Enter Name:</label></div>
+          <div class="col-sm-8">
+            <input type="text" name="fullname" placeholder="Enter Name" class="form-control input-sm" required>
+          </div>
+        </div>
+
+        <div class="row cf-ro">
+          <div class="col-sm-3"><label>Email Address:</label></div>
+          <div class="col-sm-8">
+            <input type="text" name="emailid" placeholder="Enter Email Address" class="form-control input-sm" required>
+          </div>
+        </div>
+
+        <div class="row cf-ro">
+          <div class="col-sm-3"><label>Mobile Number:</label></div>
+          <div class="col-sm-8">
+            <input type="text" name="mobileno" placeholder="Enter Mobile Number" class="form-control input-sm" required>
+          </div>
+        </div>
+
+        <div class="row cf-ro">
+          <div class="col-sm-3"><label>Enter Message:</label></div>
+          <div class="col-sm-8">
+            <textarea rows="5" name="description" placeholder="Enter Your Message" class="form-control input-sm" required></textarea>
+          </div>
+        </div>
+
+        <div class="row cf-ro">
+          <div class="col-sm-3"></div>
+          <div class="col-sm-8">
+            <button class="btn btn-success btn-sm" type="submit" name="submit">Send Message</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+    
+    
+    
+    
+    
+    <!-- ################# Footer Starts Here#######################--->
+
+
+   <footer class="footer" style="background-color: #09152f; color: white; padding: 40px 0;">
+  <div class="container">
+    <div class="row">
+      <!-- Useful Links -->
+      <div class="col-md-6 col-sm-12 mb-4">
+        <h4 style="color: #ffffff;">Useful Links</h4>
+        <ul class="list-unstyled link-list" style="padding-left: 0;">
+          <li><a href="#about" style="color: #ffffff;">About us</a></li>
+          <li><a href="#logins" style="color: #ffffff;">Logins</a></li>
+          <li><a href="#gallery" style="color: #ffffff;">Gallery</a></li>
+          <li><a href="#contact" style="color: #ffffff;">Contact us</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="col-md-6 col-sm-12">
+        <h4 style="color: #ffffff;">Contact Us</h4>
+        <address>
+          <?php
+          $ret = mysqli_query($con, "SELECT * FROM tblpage WHERE PageType='contactus'");
+          while ($row = mysqli_fetch_array($ret)) {
+          ?>
+            <p style="margin: 0;"><?php echo $row['PageDescription']; ?></p>
+            <p style="margin: 0;">Phone: <?php echo $row['MobileNumber']; ?></p>
+            <p style="margin: 0;">Email: 
+              <a href="mailto:<?php echo $row['Email']; ?>" style="color: #00d4ff;">
+                <?php echo $row['Email']; ?>
+              </a>
+            </p>
+            <p style="margin: 0;">Timing: <?php echo $row['OpenningTime']; ?></p>
+          <?php } ?>
+        </address>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Bottom Copy -->
+<div class="copy" style="background-color: rgba(9, 21, 47, 0.9); color: #fff; text-align: center; padding: 10px 0;">
+  <div class="container">
+    &copy; <?php echo date("Y"); ?> Dental Clinic. All rights reserved.
+  </div>
+</div>
+    
+
+    <!-- CHAT BAR BLOCK -->
+    <div class="chat-bar-collapsible">
+        <button id="chat-button" type="button" class="collapsible">Chat with us!
+            <i id="chat-icon" style="color: #fff;" class="fa fa-fw fa-comments-o"></i>
+        </button>
+
+        <div class="content">
+            <div class="full-chat-block">
+                <!-- Message Container -->
+                <div class="outer-container">
+                    <div class="chat-container">
+                        <!-- Messages -->
+                        <div id="chatbox">
+                            <h5 id="chat-timestamp"></h5>
+                            <p id="botStarterMessage" class="botText"><span>Loading...</span></p>
+                        </div>
+
+                        <!-- User input box -->
+                        <div class="chat-bar-input-block">
+                            <div id="userInput">
+                                <input id="textInput" class="input-box" type="text" name="msg"
+                                    placeholder="Tap 'Enter' to send a message" list='listid'>
+                                    <datalist id='listid'>
+                                       <option label='How do I prepare for my first visit to the clinic?' value='How do I prepare for my first visit to the clinic?'>
+                                       <option label='What should I do in case of a dental emergency after hours?' value='What should I do in case of a dental emergency after hours?'>
+                                        <option label='Can I reschedule or cancel my appointment?' value='Can I reschedule or cancel my appointment?'>
+                                        <option label='How much does a specific dental procedure cost?' value='How much does a specific dental procedure cost?'>
+                                       ...
+                                    </datalist>
+                                <p></p>
+                            </div>
+
+                            <div class="chat-bar-icons">
+                                <i id="chat-icon" style="color: crimson;" class="fa fa-fw fa-heart"
+                                    onclick="heartButton()"></i>
+                                <i id="chat-icon" style="color: #666;" class="fa fa-fw fa-send"
+                                    onclick="sendButton()"></i>
+                            </div>
+                        </div>
+
+                        <div id="chat-bar-bottom">
+                            <p></p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    </body>
+
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.easing.min.js"></script>
+<script src="js/scrolling-nav.js"></script>
+<script src="js/jquery-scrolltofixed-min.js"></script>
+<script src="js/script.js"></script>
+<script type="text/javascript">
+    
+// Collapsible
+var coll = document.getElementsByClassName("collapsible");
+
+for (let i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+
+        var content = this.nextElementSibling;
+
+        if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+        } else {
+            content.style.maxHeight = content.scrollHeight + "px";
+        }
+
+    });
+}
+
+function getTime() {
+    let today = new Date();
+    hours = today.getHours();
+    minutes = today.getMinutes();
+
+    if (hours < 10) {
+        hours = "0" + hours;
+    }
+
+    if (minutes < 10) {
+        minutes = "0" + minutes;
+    }
+
+    let time = hours + ":" + minutes;
+    return time;
+}
+
+// Gets the first message
+function firstBotMessage() {
+    let firstMessage = "How's it going?"
+    document.getElementById("botStarterMessage").innerHTML = '<p class="botText"><span>' + firstMessage + '</span></p>';
+
+    let time = getTime();
+
+    $("#chat-timestamp").append(time);
+    document.getElementById("userInput").scrollIntoView(false);
+}
+
+firstBotMessage();
+
+// Retrieves the response
+function getHardResponse(userText) {
+    let botResponse = getBotResponse(userText);
+    let botHtml = '<p class="botText"><span>' + botResponse + '</span></p>';
+    $("#chatbox").append(botHtml);
+
+    document.getElementById("chat-bar-bottom").scrollIntoView(true);
+}
+
+//Gets the text text from the input box and processes it
+function getResponse() {
+    let userText = $("#textInput").val();
+
+    if (userText == "") {
+        userText = "No inputed text!";
+    }
+
+    let userHtml = '<p class="userText"><span>' + userText + '</span></p>';
+
+    $("#textInput").val("");
+    $("#chatbox").append(userHtml);
+    document.getElementById("chat-bar-bottom").scrollIntoView(true);
+
+    setTimeout(() => {
+        getHardResponse(userText);
+    }, 1000)
+
+}
+
+// Handles sending text via button clicks
+function buttonSendText(sampleText) {
+    let userHtml = '<p class="userText"><span>' + sampleText + '</span></p>';
+
+    $("#textInput").val("");
+    $("#chatbox").append(userHtml);
+    document.getElementById("chat-bar-bottom").scrollIntoView(true);
+
+    //Uncomment this if you want the bot to respond to this buttonSendText event
+    // setTimeout(() => {
+    //     getHardResponse(sampleText);
+    // }, 1000)
+}
+
+function sendButton() {
+    getResponse();
+}
+
+function heartButton() {
+    buttonSendText("Heart clicked!")
+}
+
+// Press enter to send a message
+$("#textInput").keypress(function (e) {
+    if (e.which == 13) {
+        getResponse();
+    }
+});
+
+function getBotResponse(input) {
+    //rock paper scissors
+    if (input == "rock") {
+        return "paper";
+    } else if (input == "paper") {
+        return "scissors";
+    } else if (input == "scissors") {
+        return "rock";
+    }
+
+    // Simple responses
+    if (input == "How much does a specific dental procedure cost?") {
+        //chatbot response
+        return "The cost varies depending on the procedure and individual needs. For an accurate estimate, please provide details or visit our clinic for a consultation. We also accept various insurance plans that might cover certain procedures.";
+    } else if (input == "Can I reschedule or cancel my appointment?") {
+         //chatbot response
+        return "Absolutely! You can reschedule or cancel your appointment through our online booking system [link] or by reaching out to us directly. Please note our cancellation policy ";
+    } else if (input == "What should I do in case of a dental emergency after hours?") {
+         //chatbot response
+        return "In the event of a dental emergency after our clinic hours, we recommend seeking immediate assistance at the nearest emergency dental clinic or hospital. If it's urgent during clinic hours, call us at ";
+    } else if (input == "How do I prepare for my first visit to the clinic?") {
+         //chatbot response
+        return "Please arrive 10-15 minutes before your scheduled appointment to complete any necessary paperwork. If you have any specific medical history or insurance details, it would be helpful to bring those along.";
+    } else {
+        return "Try asking based on the suggestion lists!";
+    }
+}    
+</script>
+
 </html>
+
+<script>
+  function openLightbox(imgElement) {
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+    lightbox.style.display = "flex"; // Use flex to center
+    lightboxImg.src = imgElement.src;
+  }
+
+  function closeLightbox() {
+    document.getElementById("lightbox").style.display = "none";
+  }
+</script>
