@@ -243,35 +243,32 @@ body {
 
     <!-- ################# Header Starts Here#######################--->
     
-     <header id="menu-jk">
-  <div id="nav-head" class="header-nav">
-    <div class="container">
-      <div class="row align-items-center justify-content-between">
-        
-        <!-- Logo -->
-        <div class="col-lg-4 col-md-5 col-sm-12 logo-title">
-          <img src="images/MainL.png" alt="Logo">
-          <span>Dental Clinic</span>
-        </div>
-
-        <!-- Navigation -->
-        <div class="col-lg-5 col-md-6 nav-section">
-          <ul class="nav-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#about_us">About Us</a></li>
-            <li><a href="#gallery">Gallery</a></li>
-            <li><a href="#contact_us">Contact Us</a></li>
-            <li><a href="#logins">Logins</a></li>
-          </ul>
-        </div>
-
-        <!-- Button -->
-        <div class="col-lg-3 text-end">
-          <a href="hms/user-login.html" class="book-btn">Book Appointment</a>
-        </div>
-        
-      </div>
+    <header>
+  <div class="header-nav">
+    <!-- Logo and Name -->
+    <div class="header-left">
+      <img src="images/MainL.png" alt="Logo">
+      <span>Dental Clinic</span>
     </div>
+
+    <!-- Hamburger for mobile -->
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <!-- Navigation Menu -->
+    <ul class="nav-links" id="menu">
+      <li><a href="#">Home</a></li>
+      <li><a href="#about_us">About Us</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#contact_us">Contact Us</a></li>
+      <li><a href="#logins">Logins</a></li>
+    </ul>
+
+    <!-- Book Appointment Button -->
+    <a href="hms/user-login.html" class="book-btn">Book Appointment</a>
   </div>
 </header>
     
@@ -614,6 +611,11 @@ body {
 <script src="js/jquery-scrolltofixed-min.js"></script>
 <script src="js/script.js"></script>
 <script type="text/javascript">
+<script>function toggleMenu() 
+{
+document.getElementById('menu').classList.toggle('show');
+}
+</script>
     
 // Collapsible
 var coll = document.getElementsByClassName("collapsible");
