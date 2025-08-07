@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Patient Record</title>
+    <style>
+        body {
+            background-color: #09152f;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #response {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2>Delete Patient Record</h2>
+    <input type="number" id="patientid" placeholder="Enter Patient ID">
+    <button onclick="deletePatient()">Delete</button>
+    <div id="response"></div>
+
+    <script>
+        function deletePatient() {
+            const patientid = document.getElementById('patientid').value;
+
+            if (!patientid) {
+                document.getElementById('response').innerText = 'Please enter a valid ID.';
+                return;
+            }
+
+            fetch('delete_patient.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'patientid=' + encodeURIComponent(patientid)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.response === 'success') {
+                    document.getElementById('response').innerText = 'Record deleted successfully!';
+                } else {
+                    document.getElementById('response').innerText = 'Failed to delete record.';
+                }
+            })
+            .catch(error => {
+                document.getElementById('response').innerText = 'Error: ' + error;
+            });
+        }
+    </script>
+</body>
+</html>

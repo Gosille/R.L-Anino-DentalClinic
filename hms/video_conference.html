@@ -1,0 +1,50 @@
+
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <script src='https://8x8.vc/vpaas-magic-cookie-513f75fd8c2e47f391102c4d85cc6b0c/external_api.js' async></script>
+        <style>html, body, #jaas-container { height: 100%; }</style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script type="text/javascript">
+          window.onload = () => {
+            const api = new JitsiMeetExternalAPI("8x8.vc", {
+              roomName: "<?php echo $_GET['call_url']; ?>",
+              parentNode: document.querySelector('#jaas-container'),
+          width: 700,
+          height: 700,
+            });
+
+          api.addListener('readyToClose', (e)=>{
+
+          $.ajax({
+              url:"remove_call.php",
+              type: "POST",
+              dataType: "json",
+              data: {
+                patientid: "<?php echo $_GET['id']; ?>",
+                // code: code
+              },
+              success: (data) => { 
+
+
+               window.location.href = "http://localhost/hospital/hms/manage-video.php";    
+
+
+              }
+
+           });
+
+          });  
+          }
+        </script>
+      </head>
+      <body><div id="jaas-container"></div></body>
+
+
+      <script type="text/javascript">
+          
+
+
+      </script>
+    </html>
+  
