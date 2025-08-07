@@ -7,8 +7,9 @@ I'm Creating My Dental Clinic for testing only if it runs the entire system.
 - Adding Java for Script
 - Adding hms for user, Admin and Dentist
 
-*Our main Logo for R.L.A Dental Clinic
-<img width="480" height="480" alt="Logo with cut as circle" src="https://github.com/user-attachments/assets/f16add0d-cb01-4c1f-81da-74a2904198d4" />
+#Our main Logo for R.L.A Dental Clinic
+<img width="3111" height="1827" alt="image" src="https://github.com/user-attachments/assets/e14f96e9-70b6-4791-a563-6aad2d76c58b" />
+
 
 
 
