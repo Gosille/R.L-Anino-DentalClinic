@@ -27,7 +27,16 @@ This repository contains two versions of the dental clinic system:
 For the client-side version, I've created a JavaScript implementation of your database:
 - `js/database.js` - JavaScript database that replaces MySQL
 - `js-demo.html` - Demo page showing how to use the database
+- `test-database.html` - Test page to verify database functionality
+- `js-login.html` - Simple login page using the JavaScript database
 - `JS_DATABASE_README.md` - Detailed documentation
+
+## Testing the JavaScript Version
+
+To test the JavaScript version of your system:
+1. Open `test-database.html` to verify the database is working
+2. Open `js-login.html` to test the login functionality
+3. Open `js-demo.html` to see a more comprehensive demo
 
 ## Our main Logo for R.L.A Dental Clinic
 <img width="3111" height="1827" alt="image" src="https://github.com/user-attachments/assets/e14f96e9-70b6-4791-a563-6aad2d76c58b" />
