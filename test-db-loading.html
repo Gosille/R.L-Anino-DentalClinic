@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Database Loading</title>
+</head>
+<body>
+    <h1>Test Database Loading</h1>
+    <p>This page tests if the database.js file can be loaded correctly.</p>
+    
+    <!-- Include JavaScript Database -->
+    <script src="js/database.js"></script>
+    
+    <script>
+        // Check if HMSDatabase is available
+        if (typeof HMSDatabase !== 'undefined') {
+            console.log('HMSDatabase loaded successfully');
+            console.log('Available tables:', Object.keys(HMSDatabase.data));
+            
+            // Try to get some data
+            const users = HMSDatabase.getAll('users');
+            console.log('Number of users:', users.length);
+            
+            document.body.innerHTML += '<p style="color: green;">SUCCESS: Database loaded correctly!</p>';
+            document.body.innerHTML += '<p>Found ' + users.length + ' users in the database.</p>';
+        } else {
+            console.error('HMSDatabase not loaded');
+            document.body.innerHTML += '<p style="color: red;">ERROR: Database not loaded!</p>';
+        }
+    </script>
+</body>
+</html>
