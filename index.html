@@ -601,21 +601,23 @@ body {
       <!-- Contact Info -->
       <div class="col-md-6 col-sm-12">
         <h4 style="color: #ffffff;">Contact Us</h4>
-        <address>
-          <script>
-          // Load contact information from JavaScript database
-          document.addEventListener('DOMContentLoaded', function() {
-            // Get contact information from the JavaScript database
-            const contactInfo = HMSDatabase.getByField('tblpage', 'PageType', 'contactus')[0];
-            if (contactInfo) {
-              document.write('<p style="margin: 0;">' + contactInfo.PageDescription + '</p>');
-              document.write('<p style="margin: 0;">Phone: ' + contactInfo.MobileNumber + '</p>');
-              document.write('<p style="margin: 0;">Email: <a href="mailto:' + contactInfo.Email + '" style="color: #00d4ff;">' + contactInfo.Email + '</a></p>');
-              document.write('<p style="margin: 0;">Timing: ' + contactInfo.OpenningTime + '</p>');
-            }
-          });
-          </script>
+        <address id="contact-info">
+          <!-- Contact information will be loaded by JavaScript -->
         </address>
+        <script>
+        // Load contact information from JavaScript database
+        document.addEventListener('DOMContentLoaded', function() {
+          // Get contact information from the JavaScript database
+          const contactInfo = HMSDatabase.getByField('tblpage', 'PageType', 'contactus')[0];
+          if (contactInfo) {
+            document.getElementById('contact-info').innerHTML =
+              '<p style="margin: 0;">' + contactInfo.PageDescription + '</p>' +
+              '<p style="margin: 0;">Phone: ' + contactInfo.MobileNumber + '</p>' +
+              '<p style="margin: 0;">Email: <a href="mailto:' + contactInfo.Email + '" style="color: #00d4ff;">' + contactInfo.Email + '</a></p>' +
+              '<p style="margin: 0;">Timing: ' + contactInfo.OpenningTime + '</p>';
+          }
+        });
+        </script>
       </div>
     </div>
   </div>
