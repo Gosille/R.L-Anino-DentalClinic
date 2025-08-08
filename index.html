@@ -260,7 +260,7 @@ body {
 
      <!-- Button -->
        <div class="col-lg-3 d-none d-lg-block text-end">
-     <a class="btn book-btn" href="hms/user-login.html">Book Appointment</a>
+     <a class="btn book-btn" href="hms/user-login-js.html">Book Appointment</a>
         </div>
 
     <!-- Mobile Menu Icon -->
@@ -357,7 +357,7 @@ body {
                     <img src="images/patient.jpg" alt="Patient Login" class="img-fluid login-img">
                     <div class="blog-single-det">
                         <h6 style="color: white;">Patient Login</h6>
-                        <a href="hms/user-login.html" target="_blank">
+                        <a href="hms/user-login-js.html" target="_blank">
                             <button class="btn btn-success btn-sm">Click Here</button>
                         </a>
                     </div>
@@ -370,7 +370,7 @@ body {
                     <img src="images/doctor.jpg" alt="Dentist Login" class="img-fluid login-img">
                     <div class="blog-single-det">
                         <h6 style="color: white;">Dentist Login</h6>
-                        <a href="hms/doctor/doctor-dash.html" target="_blank">
+                        <a href="hms/doctor/doctor-login-js.html" target="_blank">
                             <button class="btn btn-success btn-sm">Click Here</button>
                         </a>
                     </div>
@@ -383,7 +383,7 @@ body {
                     <img src="images/admin.jpg" alt="Admin Login" class="img-fluid login-img">
                     <div class="blog-single-det">
                         <h6 style="color: white;">Admin Login</h6>
-                        <a href="hms/admin/admin-dash.html" target="_blank">
+                        <a href="hms/admin/admin-login-js.html" target="_blank">
                             <button class="btn btn-success btn-sm">Click Here</button>
                         </a>
                     </div>
@@ -523,19 +523,19 @@ body {
       <div class="col-md-6 col-sm-12">
         <h4 style="color: #ffffff;">Contact Us</h4>
         <address>
-          <?php
-          $ret = mysqli_query($con, "SELECT * FROM tblpage WHERE PageType='contactus'");
-          while ($row = mysqli_fetch_array($ret)) {
-          ?>
-            <p style="margin: 0;"><?php echo $row['PageDescription']; ?></p>
-            <p style="margin: 0;">Phone: <?php echo $row['MobileNumber']; ?></p>
-            <p style="margin: 0;">Email: 
-              <a href="mailto:<?php echo $row['Email']; ?>" style="color: #00d4ff;">
-                <?php echo $row['Email']; ?>
-              </a>
-            </p>
-            <p style="margin: 0;">Timing: <?php echo $row['OpenningTime']; ?></p>
-          <?php } ?>
+          <script>
+          // Load contact information from JavaScript database
+          document.addEventListener('DOMContentLoaded', function() {
+            // Get contact information from the JavaScript database
+            const contactInfo = HMSDatabase.getByField('tblpage', 'PageType', 'contactus')[0];
+            if (contactInfo) {
+              document.write('<p style="margin: 0;">' + contactInfo.PageDescription + '</p>');
+              document.write('<p style="margin: 0;">Phone: ' + contactInfo.MobileNumber + '</p>');
+              document.write('<p style="margin: 0;">Email: <a href="mailto:' + contactInfo.Email + '" style="color: #00d4ff;">' + contactInfo.Email + '</a></p>');
+              document.write('<p style="margin: 0;">Timing: ' + contactInfo.OpenningTime + '</p>');
+            }
+          });
+          </script>
         </address>
       </div>
     </div>
@@ -545,7 +545,7 @@ body {
 <!-- Bottom Copy -->
 <div class="copy" style="background-color: rgba(9, 21, 47, 0.9); color: #fff; text-align: center; padding: 10px 0;">
   <div class="container">
-    &copy; <?php echo date("Y"); ?> Dental Clinic. All rights reserved.
+    &copy; <span id="currentYear"></span> Dental Clinic. All rights reserved.
   </div>
 </div>
     
