@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test JavaScript Database</title>
+    <script src="js/database.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>JavaScript Database Test</h1>
+    
+    <div class="test-section">
+        <h2>Test Database Connection</h2>
+        <button onclick="testConnection()">Test Connection</button>
+        <div id="connectionResult" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test User Authentication</h2>
+        <form id="authForm">
+            <div>
+                <label for="userType">User Type:</label>
+                <select id="userType">
+                    <option value="user">Patient</option>
+                    <option value="doctor">Doctor</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div>
+                <label for="username">Username/Email:</label>
+                <input type="text" id="username" value="marbenbenetez@gmail.com">
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" value="123456">
+            </div>
+            <button type="button" onclick="testAuth()">Test Authentication</button>
+        </form>
+        <div id="authResult" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>View Database Contents</h2>
+        <button onclick="viewDatabase()">View Database</button>
+        <div id="databaseResult" class="result"></div>
+    </div>
+
+    <script>
+        // Test database connection
+        function testConnection() {
+            const resultDiv = document.getElementById('connectionResult');
+            try {
+                if (typeof HMSDatabase !== 'undefined') {
+                    resultDiv.innerHTML = '<p style="color: green;">✓ Database connected successfully!</p>';
+                    resultDiv.innerHTML += '<p>Available tables: ' + Object.keys(HMSDatabase.data).join(', ') + '</p>';
+                } else {
+                    resultDiv.innerHTML = '<p style="color: red;">✗ Database not found!</p>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = '<p style="color: red;">✗ Error: ' + error.message + '</p>';
+            }
+        }
+        
+        // Test authentication
+        function testAuth() {
+            const userType = document.getElementById('userType').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            const resultDiv = document.getElementById('authResult');
+            
+            try {
+                const user = HMSDatabase.authenticate(username, password, userType);
+                if (user) {
+                    resultDiv.innerHTML = '<p style="color: green;">✓ Authentication successful!</p>';
+                    resultDiv.innerHTML += '<pre>' + JSON.stringify(user, null, 2) + '</pre>';
+                } else {
+                    resultDiv.innerHTML = '<p style="color: red;">✗ Authentication failed!</p>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = '<p style="color: red;">✗ Error: ' + error.message + '</p>';
+            }
+        }
+        
+        // View database contents
+        function viewDatabase() {
+            const resultDiv = document.getElementById('databaseResult');
+            
+            try {
+                let html = '<h3>Database Contents:</h3>';
+                
+                // Show users
+                html += '<h4>Users:</h4>';
+                const users = HMSDatabase.getAll('users');
+                html += '<pre>' + JSON.stringify(users, null, 2) + '</pre>';
+                
+                // Show doctors
+                html += '<h4>Doctors:</h4>';
+                const doctors = HMSDatabase.getAll('doctors');
+                html += '<pre>' + JSON.stringify(doctors, null, 2) + '</pre>';
+                
+                // Show appointments
+                html += '<h4>Appointments:</h4>';
+                const appointments = HMSDatabase.getAll('appointment');
+                html += '<pre>' + JSON.stringify(appointments, null, 2) + '</pre>';
+                
+                resultDiv.innerHTML = html;
+            } catch (error) {
+                resultDiv.innerHTML = '<p style="color: red;">✗ Error: ' + error.message + '</p>';
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Test page loaded');
+            // Auto-run connection test
+            setTimeout(testConnection, 1000);
+        });
+    </script>
+</body>
+</html>
