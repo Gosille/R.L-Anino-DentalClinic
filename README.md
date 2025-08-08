@@ -38,5 +38,9 @@ To test the JavaScript version of your system:
 2. Open `js-login.html` to test the login functionality
 3. Open `js-demo.html` to see a more comprehensive demo
 
+## File Structure Documentation
+
+For detailed information about the file structure and purpose of each file, see [FILE_STRUCTURE.md](FILE_STRUCTURE.md).
+
 ## Our main Logo for R.L.A Dental Clinic
 <img width="3111" height="1827" alt="image" src="https://github.com/user-attachments/assets/e14f96e9-70b6-4791-a563-6aad2d76c58b" />
