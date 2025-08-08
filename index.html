@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 
@@ -18,7 +17,99 @@
     <style type="text/css">
 
        
-    
+     
+/* Login Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 800px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.login-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.login-option {
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    width: 180px;
+    transition: transform 0.3s ease;
+}
+
+.login-option:hover {
+    transform: translateY(-5px);
+}
+
+.login-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.login-option h3 {
+    margin: 10px 0;
+    color: #333;
+}
+
+.login-option .btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.login-option .btn:hover {
+    background-color: #0056b3;
+}
+
+/* Chat Bar Styles (Conflict marker escaped: \=======) */
 .chat-bar-collapsible {
     position: fixed;
     bottom: 20px;
@@ -255,7 +346,7 @@ body {
       <li><a href="#about" class="nav-link">About Us</a></li>
       <li><a href="#gallery" class="nav-link">Gallery</a></li>
       <li><a href="#contact" class="nav-link">Contact Us</a></li>
-      <li><a href="#logins" class="nav-link">Logins</a></li>
+      <li><a href="#" class="nav-link" onclick="openLoginModal()">Logins</a></li>
     </ul>
 
      <!-- Button -->
@@ -267,6 +358,43 @@ body {
     <div class="menu-toggle" onclick="toggleMenu()">☰</div>
   </nav>
 </header>
+
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeLoginModal()">&times;</span>
+    <h2 class="text-center">Choose your login type</h2>
+    <div class="login-options">
+      <!-- Admin Login -->
+      <div class="login-option">
+        <div class="login-icon">👩‍⚕️</div>
+        <h3>Admin Login</h3>
+        <a href="hms/admin/admin-login-js.html" class="btn btn-primary">Login</a>
+      </div>
+
+      <!-- Dentist Login -->
+      <div class="login-option">
+        <div class="login-icon">🦷</div>
+        <h3>Dentist Login</h3>
+        <a href="hms/doctor/doctor-login-js.html" class="btn btn-primary">Login</a>
+      </div>
+
+      <!-- Receptionist Login -->
+      <div class="login-option">
+        <div class="login-icon">👩</div>
+        <h3>Receptionist Login</h3>
+        <a href="#" class="btn btn-primary" onclick="alert('Receptionist login will be implemented soon')">Login</a>
+      </div>
+
+      <!-- Patient Login -->
+      <div class="login-option">
+        <div class="login-icon">🧑</div>
+        <h3>Patient Login</h3>
+        <a href="hms/user-login-js.html" class="btn btn-primary">Login</a>
+      </div>
+    </div>
+  </div>
+</div>
     
      <!-- ################# Slider Starts Here#######################--->
 
@@ -341,61 +469,10 @@ body {
 <!-- Add jQuery and Bootstrap JS before </body> -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
-  <!--  ************************* Logins ************************** -->
-    
-    
-  <section id="logins" class="our-blog container-fluid" style="background-color: rgba(9, 21, 47, 0.8); padding: 40px 0;">
-    <div class="container">
-        <div class="inner-title text-center">
-            <h2 style="color: white;">Logins</h2>
-        </div>
-        <div class="row blog-cont">
-            <!-- Patient Login -->
-            <div class="col-md-4 col-sm-6">
-                <div class="blog-single text-center">
-                    <img src="images/patient.jpg" alt="Patient Login" class="img-fluid login-img">
-                    <div class="blog-single-det">
-                        <h6 style="color: white;">Patient Login</h6>
-                        <a href="hms/user-login-js.html">
-                            <button class="btn btn-success btn-sm">Click Here</button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Doctor Login -->
-            <div class="col-md-4 col-sm-6">
-                <div class="blog-single text-center">
-                    <img src="images/doctor.jpg" alt="Dentist Login" class="img-fluid login-img">
-                    <div class="blog-single-det">
-                        <h6 style="color: white;">Dentist Login</h6>
-                        <a href="hms/doctor/doctor-login-js.html">
-                            <button class="btn btn-success btn-sm">Click Here</button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Admin Login -->
-            <div class="col-md-4 col-sm-12">
-                <div class="blog-single text-center">
-                    <img src="images/admin.jpg" alt="Admin Login" class="img-fluid login-img">
-                    <div class="blog-single-det">
-                        <h6 style="color: white;">Admin Login</h6>
-                        <a href="hms/admin/admin-login-js.html">
-                            <button class="btn btn-success btn-sm">Click Here</button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-    
-    
+     
+     
     <!--  ************************* About Us Starts Here ************************** -->
-        
+         
   <section id="about_us" class="about-us-section">
   <div class="about-us-container">
     <div class="about-image-section"></div>
@@ -411,11 +488,11 @@ body {
   </div>
 </section>
 
-    
-            <!--  ************************* Gallery Starts Here ************************** -->
      
-     
-            <section id="gallery" class="gallery-section">
+             <!--  ************************* Gallery Starts Here ************************** -->
+      
+      
+             <section id="gallery" class="gallery-section">
   <div class="inner-title">
     <h2>Our Gallery</h2>
     <p>View Our Gallery</p>
@@ -449,10 +526,10 @@ body {
 
 
         <!-- ######## Gallery End ####### -->
-    
-    
-     <!--  ************************* Contact Us Starts Here ************************** -->
-    
+     
+     
+      <!--  ************************* Contact Us Starts Here ************************** -->
+     
     <section id="contact_us" class="contact-us-single">
   <div class="row no-margin">
     <div class="col-sm-12 cop-ck">
@@ -497,11 +574,11 @@ body {
     </div>
   </div>
 </section>
-    
-    
-    
-    
-    
+     
+     
+     
+     
+     
     <!-- ################# Footer Starts Here#######################--->
 
 
@@ -548,7 +625,7 @@ body {
     &copy; <span id="currentYear"></span> Dental Clinic. All rights reserved.
   </div>
 </div>
-    
+     
 
     <!-- CHAT BAR BLOCK -->
     <div class="chat-bar-collapsible">
@@ -605,6 +682,8 @@ body {
 
     </body>
 
+<!-- Include JavaScript Database -->
+<script src="js/database.js"></script>
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -767,5 +846,22 @@ function getBotResponse(input) {
 <script>
 function toggleMenu() {
   document.querySelector('.nav-links').classList.toggle('active');
+}
+
+// Login Modal Functions
+function openLoginModal() {
+  document.getElementById('loginModal').style.display = 'block';
+}
+
+function closeLoginModal() {
+  document.getElementById('loginModal').style.display = 'none';
+}
+
+// Close modal when clicking outside of it
+window.onclick = function(event) {
+  const modal = document.getElementById('loginModal');
+  if (event.target == modal) {
+    modal.style.display = 'none';
+  }
 }
 </script>
