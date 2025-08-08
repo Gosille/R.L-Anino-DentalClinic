@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HMS JavaScript Database Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .user-info {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            background-color: #ddd;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-bottom: none;
+        }
+        .tab.active {
+            background-color: #007bff;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>HMS JavaScript Database Demo</h1>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('login')">Login</div>
+            <div class="tab" onclick="switchTab('data')">View Data</div>
+        </div>
+        
+        <div id="loginTab" class="tab-content active">
+            <h2>User Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="userType">User Type:</label>
+                    <select id="userType">
+                        <option value="user">Patient</option>
+                        <option value="doctor">Doctor</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="username">Username/Email:</label>
+                    <input type="text" id="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" required>
+                </div>
+                
+                <button type="submit">Login</button>
+            </form>
+            
+            <div id="loginResult" class="result"></div>
+            
+            <div class="user-info">
+                <h3>Default Credentials:</h3>
+                <p><strong>Admin:</strong> username: admin, password: Test@12345</p>
+                <p><strong>Doctor:</strong> email: Marben@test.com, password: 123456</p>
+                <p><strong>Patient:</strong> email: marbenbenetez@gmail.com, password: 123456</p>
+            </div>
+        </div>
+        
+        <div id="dataTab" class="tab-content">
+            <h2>Database Contents</h2>
+            <button onclick="loadData()">Load Data</button>
+            <div id="dataResult" class="result"></div>
+        </div>
+    </div>
+
+    <!-- Include the database script -->
+    <script src="js/database.js"></script>
+    
+    <script>
+        // Switch between tabs
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+        
+        // Handle login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const userType = document.getElementById('userType').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            const user = HMSDatabase.authenticate(username, password, userType);
+            
+            const resultDiv = document.getElementById('loginResult');
+            
+            if (user) {
+                resultDiv.className = 'result success';
+                resultDiv.innerHTML = `
+                    <h3>Login Successful!</h3>
+                    <p>Welcome, ${user.fullName || user.doctorName || user.username}!</p>
+                    <p>User Type: ${userType}</p>
+                    <p>User ID: ${user.id || user.ID}</p>
+                `;
+                resultDiv.style.display = 'block';
+            } else {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = '<h3>Login Failed!</h3><p>Invalid credentials. Please try again.</p>';
+                resultDiv.style.display = 'block';
+            }
+        });
+        
+        // Load and display database data
+        function loadData() {
+            const resultDiv = document.getElementById('dataResult');
+            
+            try {
+                let html = '<h3>Database Contents</h3>';
+                
+                // Display users
+                html += '<h4>Users:</h4>';
+                html += '<ul>';
+                HMSDatabase.getAll('users').forEach(user => {
+                    html += `<li>${user.fullName} (${user.email})</li>`;
+                });
+                html += '</ul>';
+                
+                // Display doctors
+                html += '<h4>Doctors:</h4>';
+                html += '<ul>';
+                HMSDatabase.getAll('doctors').forEach(doctor => {
+                    html += `<li>Dr. ${doctor.doctorName} (${doctor.docEmail})</li>`;
+                });
+                html += '</ul>';
+                
+                // Display appointments
+                html += '<h4>Appointments:</h4>';
+                html += '<ul>';
+                HMSDatabase.getAll('appointment').forEach(app => {
+                    html += `<li>Patient ID: ${app.userId}, Doctor ID: ${app.doctorId}, Date: ${app.appointmentDate}</li>`;
+                });
+                html += '</ul>';
+                
+                resultDiv.className = 'result success';
+                resultDiv.innerHTML = html;
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `<h3>Error Loading Data</h3><p>${error.message}</p>`;
+            }
+            
+            resultDiv.style.display = 'block';
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('HMS JavaScript Database loaded');
+            console.log('Available tables:', Object.keys(HMSDatabase.data));
+        });
+    </script>
+</body>
+</html>
