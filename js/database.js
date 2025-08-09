@@ -315,6 +315,7 @@ const HMSDatabase = {
   save: function() {
     try {
       localStorage.setItem('hmsDatabase', JSON.stringify(this.data));
+      console.log('Data saved to localStorage');
     } catch (e) {
       console.error('Error saving database to localStorage:', e);
     }
@@ -322,23 +323,31 @@ const HMSDatabase = {
   
   // Get all records from a table
   getAll: function(table) {
+    console.log('Getting all records from table:', table);
     return this.data[table] || [];
   },
   
   // Get a record by ID
   getById: function(table, id) {
+    console.log('Getting record by ID from table:', table, 'ID:', id);
     const records = this.getAll(table);
-    return records.find(record => record.id === id || record.ID === id);
+    const result = records.find(record => record.id === id || record.ID === id);
+    console.log('Found record:', result);
+    return result;
   },
   
   // Get records by a specific field value
   getByField: function(table, field, value) {
+    console.log('Getting records by field from table:', table, 'Field:', field, 'Value:', value);
     const records = this.getAll(table);
-    return records.filter(record => record[field] === value);
+    const result = records.filter(record => record[field] === value);
+    console.log('Found', result.length, 'records');
+    return result;
   },
   
   // Add a new record
   add: function(table, record) {
+    console.log('Adding record to table:', table, 'Record:', record);
     if (!this.data[table]) {
       this.data[table] = [];
     }
@@ -357,6 +366,7 @@ const HMSDatabase = {
   
   // Update a record
   update: function(table, id, updates) {
+    console.log('Updating record in table:', table, 'ID:', id, 'Updates:', updates);
     const records = this.data[table];
     const index = records.findIndex(record => record.id === id || record.ID === id);
     
@@ -371,6 +381,7 @@ const HMSDatabase = {
   
   // Delete a record
   delete: function(table, id) {
+    console.log('Deleting record from table:', table, 'ID:', id);
     const records = this.data[table];
     const index = records.findIndex(record => record.id === id || record.ID === id);
     
@@ -385,6 +396,7 @@ const HMSDatabase = {
   
   // Authenticate user
   authenticate: function(email, password, userType) {
+    console.log('Authenticating user:', email, 'Type:', userType);
     let user = null;
     
     if (userType === 'admin') {
@@ -401,9 +413,11 @@ const HMSDatabase = {
     if (user && user.password === password) {
       // Remove password before returning
       const { password, ...userWithoutPassword } = user;
+      console.log('Authentication successful for user:', userWithoutPassword);
       return userWithoutPassword;
     }
     
+    console.log('Authentication failed for user:', email);
     return null;
   }
 };

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Admin | Edit Doctor Details</title>
+		
+		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="vendor/fontawesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="vendor/themify-icons/themify-icons.min.css">
+		<link href="vendor/animate.css/animate.min.css" rel="stylesheet" media="screen">
+		<link href="vendor/perfect-scrollbar/perfect-scrollbar.min.css" rel="stylesheet" media="screen">
+		<link href="vendor/switchery/switchery.min.css" rel="stylesheet" media="screen">
+		<link href="vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" media="screen">
+		<link href="vendor/select2/select2.min.css" rel="stylesheet" media="screen">
+		<link href="vendor/bootstrap-datepicker/bootstrap-datepicker3.standalone.min.css" rel="stylesheet" media="screen">
+		<link href="vendor/bootstrap-timepicker/bootstrap-timepicker.min.css" rel="stylesheet" media="screen">
+		<link rel="stylesheet" href="assets/css/styles.css">
+		<link rel="stylesheet" href="assets/css/plugins.css">
+		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
+		
+		<!-- Include JavaScript Database -->
+		<script src="../../js/database.js"></script>
+	</head>
+	<body>
+		<div id="app">		
+			<!-- Sidebar -->
+			<div class="sidebar app-aside" id="sidebar">
+				<div class="sidebar-container perfect-scrollbar">
+					<nav>
+						<!-- start: SEARCH FORM -->
+						<div class="search-form">
+							<a class="s-open" href="#">
+								<i class="ti-search"></i>
+							</a>
+							<form class="navbar-form" role="search">
+								<a class="s-remove" href="#" target=".navbar-form">
+									<i class="ti-close"></i>
+								</a>
+								<div class="form-group">
+									<input type="text" class="form-control" placeholder="Search...">
+									<i class="ti-search"></i>
+								</div>
+							</form>
+						</div>
+						<!-- end: SEARCH FORM -->
+						<!-- start: MAIN NAVIGATION MENU -->
+						<div class="navbar-title">
+							<span>Main Navigation</span>
+						</div>
+						<ul class="main-navigation-menu">
+							<li>
+								<a href="dashboard-js.html">
+									<div class="item-content">
+										<div class="item-media">
+											<i class="ti-home"></i>
+										</div>
+										<div class="item-inner">
+											<span class="title"> Dashboard </span>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="manage-users.html">
+									<div class="item-content">
+										<div class="item-media">
+											<i class="ti-user"></i>
+										</div>
+										<div class="item-inner">
+											<span class="title"> Manage Users </span>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="manage-doctors.html">
+									<div class="item-content">
+										<div class="item-media">
+											<i class="ti-user"></i>
+										</div>
+										<div class="item-inner">
+											<span class="title"> Manage Doctors </span>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="manage-patients.html">
+									<div class="item-content">
+										<div class="item-media">
+											<i class="ti-user"></i>
+										</div>
+										<div class="item-inner">
+											<span class="title"> Manage Patients </span>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="appointment-history.html">
+									<div class="item-content">
+										<div class="item-media">
+											<i class="ti-layers-alt"></i>
+										</div>
+										<div class="item-inner">
+											<span class="title"> Appointment History </span>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="unread-queries.html">
+									<div class="item-content">
+										<div class="item-media">
+											<i class="ti-email"></i>
+										</div>
+										<div class="item-inner">
+											<span class="title"> Unread Queries </span>
+										</div>
+									</div>
+								</a>
+							</li>
+						</ul>
+						<!-- end: MAIN NAVIGATION MENU -->
+					</nav>
+				</div>
+			</div>
+			<!-- end: SIDEBAR -->
+			
+			<div class="app-content">
+				<!-- Header -->
+				<header class="navbar navbar-default navbar-static-top">
+					<!-- start: NAVBAR HEADER -->
+					<div class="navbar-header">
+						<a href="#" class="sidebar-mobile-toggler pull-left hidden-md hidden-lg" class="btn btn-navbar sidebar-toggle" data-toggle-class="app-slide-off" data-toggle-target="#app" data-toggle-click-outside="#sidebar">
+							<i class="ti-align-justify"></i>
+						</a>
+						<a class="navbar-brand" href="#">
+							<img src="assets/images/logo.png" alt="Dental Clinic">
+						</a>
+						<a href="#" class="sidebar-toggler pull-right visible-md visible-lg" data-toggle-class="app-sidebar-closed" data-toggle-target="#app">
+							<i class="ti-align-justify"></i>
+						</a>
+						<a class="pull-right menu-toggler visible-xs-block" id="menu-toggler" data-toggle="collapse" href=".navbar-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<i class="ti-view-grid"></i>
+						</a>
+					</div>
+					<!-- end: NAVBAR HEADER -->
+					<!-- start: NAVBAR COLLAPSE -->
+					<div class="navbar-collapse collapse">
+						<ul class="nav navbar-right">
+							<!-- start: MESSAGES -->
+							<li class="dropdown">
+								<a href class="dropdown-toggle" data-toggle="dropdown">
+									<i class="ti-email"></i>
+									<span class="badge" id="unreadQueriesCount">0</span>
+								</a>
+							</li>
+							<!-- end: MESSAGES -->
+							<!-- start: USER OPTIONS -->
+							<li class="dropdown current-user">
+								<a href class="dropdown-toggle" data-toggle="dropdown">
+									<img src="assets/images/avatar-1.jpg" alt="Admin"> <span class="username" id="adminName">Admin</span>
+									<i class="ti-angle-down"></i>
+								</a>
+								<ul class="dropdown-menu dropdown-dark">
+									<li>
+										<a href="change-password.html">
+											Change Password
+										</a>
+									</li>
+									<li>
+										<a href="logout.html">
+											Log Out
+										</a>
+									</li>
+								</ul>
+							</li>
+							<!-- end: USER OPTIONS -->
+						</ul>
+						<!-- start: MENU TOGGLER FOR MOBILE DEVICES -->
+						<div class="close-handle visible-xs-block menu-toggler" data-toggle="collapse" href=".navbar-collapse">
+							<div class="arrow-left"></div>
+							<div class="arrow-right"></div>
+						</div>
+						<!-- end: MENU TOGGLER FOR MOBILE DEVICES -->
+					</div>
+					<!-- end: NAVBAR COLLAPSE -->
+				</header>
+				<!-- end: TOP NAVBAR -->
+				
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: PAGE TITLE -->
+						<section id="page-title">
+							<div class="row">
+								<div class="col-sm-8">
+									<h1 class="mainTitle">Admin | Edit Doctor Details</h1>
+								</div>
+								<ol class="breadcrumb">
+									<li>
+										<span>Admin</span>
+									</li>
+									<li class="active">
+										<span>Edit Doctor Details</span>
+									</li>
+								</ol>
+							</div>
+						</section>
+						<!-- end: PAGE TITLE -->
+						<!-- start: BASIC EXAMPLE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<div id="messageArea" class="alert alert-success" style="display: none;"></div>
+									<div class="row margin-top-30">
+										<div class="col-lg-8 col-md-12">
+											<div class="panel panel-white">
+												<div class="panel-heading">
+													<h5 class="panel-title">Edit Doctor info</h5>
+												</div>
+												<div class="panel-body">
+													<div id="doctorProfile"></div>
+													<hr />
+													<form role="form" id="editDoctorForm">
+														<div class="form-group">
+															<label for="DoctorSpecialization">
+																Doctor Specialization
+															</label>
+															<select name="Doctorspecialization" id="Doctorspecialization" class="form-control" required="required">
+																<!-- Specializations will be loaded by JavaScript -->
+															</select>
+														</div>
+
+														<div class="form-group">
+															<label for="doctorname">
+																 Doctor Name
+															</label>
+															<input type="text" name="docname" id="docname" class="form-control" required="required">
+														</div>
+
+														<div class="form-group">
+															<label for="address">
+																 Doctor Clinic Address
+															</label>
+															<textarea name="clinicaddress" id="clinicaddress" class="form-control"></textarea>
+														</div>
+														
+														<div class="form-group">
+															<label for="fess">
+																 Doctor Consultancy Fees
+															</label>
+															<input type="text" name="docfees" id="docfees" class="form-control" required="required">
+														</div>
+														
+														<div class="form-group">
+															<label for="fess">
+																 Doctor Contact no
+															</label>
+															<input type="text" name="doccontact" id="doccontact" class="form-control" required="required">
+														</div>
+														
+														<div class="form-group">
+															<label for="fess">
+																 Doctor Email
+															</label>
+															<input type="email" name="docemail" id="docemail" class="form-control" readonly="readonly">
+														</div>
+														
+														<input type="hidden" id="doctorId">
+														
+														<button type="submit" name="submit" class="btn btn-o btn-primary">
+															Update
+														</button>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end: BASIC EXAMPLE -->
+					</div>
+				</div>
+			</div>
+			<!-- start: FOOTER -->
+			<footer>
+				<div class="footer-inner">
+					<div class="pull-left">
+						&copy; <span class="current-year"></span><span class="text-bold text-uppercase"> HMS</span>. <span>All rights reserved</span>
+					</div>
+					<div class="pull-right">
+						<span class="go-top"><i class="ti-angle-up"></i></span>
+					</div>
+				</div>
+			</footer>
+			<!-- end: FOOTER -->
+		</div>
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="vendor/jquery/jquery.min.js"></script>
+		<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="vendor/modernizr/modernizr.js"></script>
+		<script src="vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="vendor/switchery/switchery.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+		<script src="vendor/maskedinput/jquery.maskedinput.min.js"></script>
+		<script src="vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+		<script src="vendor/autosize/autosize.min.js"></script>
+		<script src="vendor/selectFx/classie.js"></script>
+		<script src="vendor/selectFx/selectFx.js"></script>
+		<script src="vendor/select2/select2.min.js"></script>
+		<script src="vendor/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+		<script src="vendor/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
+		<!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="assets/js/main.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script src="assets/js/form-elements.js"></script>
+		<script>
+			jQuery(document).ready(function() {
+				Main.init();
+				FormElements.init();
+				
+				// Set current year in footer
+				document.querySelector('.current-year').textContent = new Date().getFullYear();
+				
+				// Load admin info
+				const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+				if (currentUser && currentUser.data) {
+					document.getElementById('adminName').textContent = currentUser.data.username || 'Admin';
+				}
+				
+				// Load doctor data
+				loadDoctorData();
+				
+				// Handle form submission
+				document.getElementById('editDoctorForm').addEventListener('submit', function(e) {
+					e.preventDefault();
+					updateDoctor();
+				});
+			});
+			
+			function loadDoctorData() {
+				try {
+					// Get doctor ID from URL parameter
+					const urlParams = new URLSearchParams(window.location.search);
+					const doctorId = urlParams.get('id');
+					
+					if (!doctorId) {
+						showMessage('Doctor ID not provided', 'error');
+						return;
+					}
+					
+					// Get doctor from the database
+					const doctor = HMSDatabase.getById('doctors', parseInt(doctorId));
+					
+					if (!doctor) {
+						showMessage('Doctor not found', 'error');
+						return;
+					}
+					
+					// Display doctor profile
+					displayDoctorProfile(doctor);
+					
+					// Populate form with doctor data
+					document.getElementById('doctorId').value = doctor.id;
+					document.getElementById('docname').value = doctor.doctorName || '';
+					document.getElementById('clinicaddress').value = doctor.address || '';
+					document.getElementById('docfees').value = doctor.docFees || '';
+					document.getElementById('doccontact').value = doctor.contactno || '';
+					document.getElementById('docemail').value = doctor.docEmail || '';
+					
+					// Load specializations
+					loadSpecializations(doctor.specilization);
+				} catch (error) {
+					console.error('Error loading doctor data:', error);
+					showMessage('Error loading doctor data', 'error');
+				}
+			}
+			
+			function displayDoctorProfile(doctor) {
+				const profileDiv = document.getElementById('doctorProfile');
+				profileDiv.innerHTML = `
+					<h4>${doctor.doctorName || ''}'s Profile</h4>
+					<p><b>Profile Reg. Date: </b>${doctor.creationDate || ''}</p>
+					${doctor.updationDate ? `<p><b>Profile Last Updation Date: </b>${doctor.updationDate}</p>` : ''}
+				`;
+			}
+			
+			function loadSpecializations(selectedSpecialization) {
+				try {
+					// Get specializations from the database
+					const specializations = HMSDatabase.getAll('doctorspecilization');
+					
+					// Get the select element
+					const selectElement = document.getElementById('Doctorspecialization');
+					
+					// Clear existing options
+					selectElement.innerHTML = '';
+					
+					// Add selected specialization as the first option
+					if (selectedSpecialization) {
+						const option = document.createElement('option');
+						option.value = selectedSpecialization;
+						option.textContent = selectedSpecialization;
+						option.selected = true;
+						selectElement.appendChild(option);
+					}
+					
+					// Add all specializations
+					specializations.forEach(spec => {
+						const option = document.createElement('option');
+						option.value = spec.specilization;
+						option.textContent = spec.specilization;
+						selectElement.appendChild(option);
+					});
+				} catch (error) {
+					console.error('Error loading specializations:', error);
+					showMessage('Error loading specializations', 'error');
+				}
+			}
+			
+			function updateDoctor() {
+				try {
+					// Get form data
+					const doctorId = document.getElementById('doctorId').value;
+					const docspecialization = document.getElementById('Doctorspecialization').value;
+					const docname = document.getElementById('docname').value;
+					const docaddress = document.getElementById('clinicaddress').value;
+					const docfees = document.getElementById('docfees').value;
+					const doccontactno = document.getElementById('doccontact').value;
+					const docemail = document.getElementById('docemail').value;
+					
+					// Update doctor in the database
+					const updates = {
+						specilization: docspecialization,
+						doctorName: docname,
+						address: docaddress,
+						docFees: docfees,
+						contactno: doccontactno,
+						docEmail: docemail,
+						updationDate: new Date().toLocaleString()
+					};
+					
+					const result = HMSDatabase.update('doctors', parseInt(doctorId), updates);
+					
+					if (result) {
+						showMessage('Doctor details updated successfully', 'success');
+						// Update the profile display
+						displayDoctorProfile(result);
+					} else {
+						showMessage('Error updating doctor details', 'error');
+					}
+				} catch (error) {
+					console.error('Error updating doctor:', error);
+					showMessage('Error updating doctor details', 'error');
+				}
+			}
+			
+			function showMessage(message, type) {
+				const messageArea = document.getElementById('messageArea');
+				messageArea.textContent = message;
+				messageArea.className = type === 'error' ? 'alert alert-danger' : 'alert alert-success';
+				messageArea.style.display = 'block';
+				
+				// Hide the message after 5 seconds
+				setTimeout(() => {
+					messageArea.style.display = 'none';
+				}, 5000);
+			}
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+	</body>
+</html>
