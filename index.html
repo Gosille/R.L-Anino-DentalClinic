@@ -70,6 +70,43 @@
     margin-top: 30px;
 }
 
+/* Dropdown styles */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .nav-link {
+    background-color: #ddd;
+    border-radius: 5px;
+}
+
 .login-option {
     text-align: center;
     padding: 20px;
@@ -347,7 +384,13 @@ body {
       <li><a href="#home" class="nav-link">Home</a></li>
       <li><a href="#about" class="nav-link">About Us</a></li>
       <li><a href="#gallery" class="nav-link">Gallery</a></li>
-      <li><a href="#contact" class="nav-link">Contact Us</a></li>
+      <li class="dropdown">
+        <a href="#contact" class="nav-link">Contact Us</a>
+        <div class="dropdown-content">
+          <a href="#contact-form">Contact Form</a>
+          <a href="#contact-details">Contact Details</a>
+        </div>
+      </li>
       <li><a href="#" class="nav-link" onclick="openLoginModal()">Logins</a></li>
     </ul>
 
@@ -531,51 +574,78 @@ body {
      
      
       <!--  ************************* Contact Us Starts Here ************************** -->
-     
+      
     <section id="contact_us" class="contact-us-single">
   <div class="row no-margin">
     <div class="col-sm-12 cop-ck">
-      <form method="post">
-        <h2>Contact Form</h2>
+      <div class="contact-options">
+        <h2 id="contact-form">Contact Form</h2>
+        <form method="post">
+          <div class="row cf-ro">
+            <div class="col-sm-3"><label>Enter Name:</label></div>
+            <div class="col-sm-8">
+              <input type="text" name="fullname" placeholder="Enter Name" class="form-control input-sm" required>
+            </div>
+          </div>
 
-        <div class="row cf-ro">
-          <div class="col-sm-3"><label>Enter Name:</label></div>
-          <div class="col-sm-8">
-            <input type="text" name="fullname" placeholder="Enter Name" class="form-control input-sm" required>
+          <div class="row cf-ro">
+            <div class="col-sm-3"><label>Email Address:</label></div>
+            <div class="col-sm-8">
+              <input type="text" name="emailid" placeholder="Enter Email Address" class="form-control input-sm" required>
+            </div>
+          </div>
+
+          <div class="row cf-ro">
+            <div class="col-sm-3"><label>Mobile Number:</label></div>
+            <div class="col-sm-8">
+              <input type="text" name="mobileno" placeholder="Enter Mobile Number" class="form-control input-sm" required>
+            </div>
+          </div>
+
+          <div class="row cf-ro">
+            <div class="col-sm-3"><label>Enter Message:</label></div>
+            <div class="col-sm-8">
+              <textarea rows="5" name="description" placeholder="Enter Your Message" class="form-control input-sm" required></textarea>
+            </div>
+          </div>
+
+          <div class="row cf-ro">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-8">
+              <button class="btn btn-success btn-sm" type="submit" name="submit">Send Message</button>
+            </div>
+          </div>
+        </form>
+        
+        <h2 id="contact-details" style="margin-top: 30px;">Contact Details</h2>
+        <div class="contact-details">
+          <div id="contact-info-details">
+            <!-- Contact information will be loaded by JavaScript -->
+          </div>
+          <div id="map" style="height: 300px; margin-top: 20px; border-radius: 10px; overflow: hidden;">
+            <!-- Google Map will be embedded here -->
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3934.935540147652!2d123.0849523147365!3d9.31713899317139!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33ab65d7a6d9d73d%3A0x7e419e4a0a0e4e4e!2sNegros%20Philippines!5e0!3m2!1sen!2sph!4v1624567890123!5m2!1sen!2sph" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
           </div>
         </div>
-
-        <div class="row cf-ro">
-          <div class="col-sm-3"><label>Email Address:</label></div>
-          <div class="col-sm-8">
-            <input type="text" name="emailid" placeholder="Enter Email Address" class="form-control input-sm" required>
-          </div>
-        </div>
-
-        <div class="row cf-ro">
-          <div class="col-sm-3"><label>Mobile Number:</label></div>
-          <div class="col-sm-8">
-            <input type="text" name="mobileno" placeholder="Enter Mobile Number" class="form-control input-sm" required>
-          </div>
-        </div>
-
-        <div class="row cf-ro">
-          <div class="col-sm-3"><label>Enter Message:</label></div>
-          <div class="col-sm-8">
-            <textarea rows="5" name="description" placeholder="Enter Your Message" class="form-control input-sm" required></textarea>
-          </div>
-        </div>
-
-        <div class="row cf-ro">
-          <div class="col-sm-3"></div>
-          <div class="col-sm-8">
-            <button class="btn btn-success btn-sm" type="submit" name="submit">Send Message</button>
-          </div>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
 </section>
+
+<script>
+// Load contact information from JavaScript database for contact details section
+document.addEventListener('DOMContentLoaded', function() {
+  // Get contact information from the JavaScript database
+  const contactInfo = HMSDatabase.getByField('tblpage', 'PageType', 'contactus')[0];
+  if (contactInfo) {
+    document.getElementById('contact-info-details').innerHTML =
+      '<p style="margin: 0;"><strong>Address:</strong> ' + contactInfo.PageDescription + '</p>' +
+      '<p style="margin: 0;"><strong>Phone:</strong> ' + contactInfo.MobileNumber + '</p>' +
+      '<p style="margin: 0;"><strong>Email:</strong> <a href="mailto:' + contactInfo.Email + '" style="color: #007bff;">' + contactInfo.Email + '</a></p>' +
+      '<p style="margin: 0;"><strong>Timing:</strong> ' + contactInfo.OpenningTime + '</p>';
+  }
+});
+</script>
      
      
      
