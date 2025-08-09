@@ -293,18 +293,22 @@ const HMSDatabase = {
   
   // Initialize the database
   init: function() {
+    console.log('Initializing HMSDatabase...');
     // Load data from localStorage if available, otherwise use default data
     const savedData = localStorage.getItem('hmsDatabase');
     if (savedData) {
       try {
         this.data = JSON.parse(savedData);
+        console.log('Loaded data from localStorage');
       } catch (e) {
         console.error('Error loading database from localStorage, using default data');
         this.save();
       }
     } else {
+      console.log('Using default data');
       this.save();
     }
+    console.log('HMSDatabase initialized with tables:', Object.keys(this.data));
   },
   
   // Save data to localStorage
@@ -405,4 +409,6 @@ const HMSDatabase = {
 };
 
 // Initialize the database when the script loads
+console.log('Loading HMSDatabase script...');
 HMSDatabase.init();
+console.log('HMSDatabase script loaded');
