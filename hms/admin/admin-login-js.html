@@ -42,7 +42,7 @@
 	
 	<body class="login">
 		<!-- Include JavaScript Database -->
-		<script src="../../js/database-debug.js"></script>
+		<script src="../../js/database.js"></script>
 	
 		<div class="login-wrapper">
 			<div class="main-login">
@@ -92,6 +92,15 @@
 				const resultDiv = document.getElementById('loginResult');
 				
 				try {
+					// Check if HMSDatabase is available
+					if (typeof HMSDatabase === 'undefined') {
+						console.error('HMSDatabase is not defined');
+						resultDiv.className = 'login-result error';
+						resultDiv.innerHTML = '<p>Error: Database not loaded</p>';
+						resultDiv.style.display = 'block';
+						return;
+					}
+					
 					// Authenticate admin user
 					const admin = HMSDatabase.authenticate(username, password, 'admin');
 					
@@ -116,6 +125,7 @@
 						resultDiv.style.display = 'block';
 					}
 				} catch (error) {
+					console.error('Error during login:', error);
 					resultDiv.className = 'login-result error';
 					resultDiv.innerHTML = '<p>Error: ' + error.message + '</p>';
 					resultDiv.style.display = 'block';

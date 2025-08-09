@@ -656,14 +656,29 @@ body {
 <script>
 // Load contact information from JavaScript database for contact details section
 document.addEventListener('DOMContentLoaded', function() {
-  // Get contact information from the JavaScript database
-  const contactInfo = HMSDatabase.getByField('tblpage', 'PageType', 'contactus')[0];
-  if (contactInfo) {
-    document.getElementById('contact-info-details').innerHTML =
-      '<p style="margin: 0;"><strong>Address:</strong> ' + contactInfo.PageDescription + '</p>' +
-      '<p style="margin: 0;"><strong>Phone:</strong> ' + contactInfo.MobileNumber + '</p>' +
-      '<p style="margin: 0;"><strong>Email:</strong> <a href="mailto:' + contactInfo.Email + '" style="color: #007bff;">' + contactInfo.Email + '</a></p>' +
-      '<p style="margin: 0;"><strong>Timing:</strong> ' + contactInfo.OpenningTime + '</p>';
+  try {
+    // Check if HMSDatabase is available
+    if (typeof HMSDatabase === 'undefined') {
+      console.error('HMSDatabase is not defined');
+      document.getElementById('contact-info-details').innerHTML = '<p style="color: red;">Error loading contact information</p>';
+      return;
+    }
+    
+    // Get contact information from the JavaScript database
+    const contactInfo = HMSDatabase.getByField('tblpage', 'PageType', 'contactus')[0];
+    if (contactInfo) {
+      document.getElementById('contact-info-details').innerHTML =
+        '<p style="margin: 0;"><strong>Address:</strong> ' + contactInfo.PageDescription + '</p>' +
+        '<p style="margin: 0;"><strong>Phone:</strong> ' + contactInfo.MobileNumber + '</p>' +
+        '<p style="margin: 0;"><strong>Email:</strong> <a href="mailto:' + contactInfo.Email + '" style="color: #007bff;">' + contactInfo.Email + '</a></p>' +
+        '<p style="margin: 0;"><strong>Timing:</strong> ' + contactInfo.OpenningTime + '</p>';
+    } else {
+      console.error('Contact information not found in database');
+      document.getElementById('contact-info-details').innerHTML = '<p style="color: red;">Contact information not available</p>';
+    }
+  } catch (error) {
+    console.error('Error loading contact information:', error);
+    document.getElementById('contact-info-details').innerHTML = '<p style="color: red;">Error loading contact information</p>';
   }
 });
 </script>
