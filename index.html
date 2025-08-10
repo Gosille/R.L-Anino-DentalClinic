@@ -364,9 +364,19 @@
 }
 
 .chat-bar-icons i:hover {
-    transform: scale(1.2) rotate(10deg);
+    transform: scale(1.2);
     background: rgba(255, 255, 255, 0.3);
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Dot indicator to replace heart button */
+.dot-indicator {
+    width: 12px;
+    height: 12px;
+    background-color: #ff6b6b;
+    border-radius: 50%;
+    margin: auto 5px;
+    box-shadow: 0 0 5px rgba(255, 107, 107, 0.8);
 }
 
 /* User & Bot Messages with enhanced styling */
@@ -860,8 +870,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
 
                             <div class="chat-bar-icons">
-                                <i id="chat-icon" style="color: #ff6b6b;" class="fa fa-fw fa-heart"
-                                    onclick="heartButton()"></i>
+                                <div class="dot-indicator"></div>
                                 <i id="chat-icon" style="color: white;" class="fa fa-fw fa-paper-plane"
                                     onclick="sendButton()"></i>
                             </div>
@@ -998,8 +1007,9 @@ function sendButton() {
     getResponse();
 }
 
-function heartButton() {
-    buttonSendText("Heart clicked!")
+// Dot indicator function (placeholder)
+function dotIndicator() {
+    // This is just a visual indicator, no action needed
 }
 
 // Press enter to send a message
