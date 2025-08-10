@@ -158,56 +158,65 @@
 
 /* Collapsible Header - Circular Button */
 .collapsible {
-    background-color: #fff;
+    background: linear-gradient(135deg, #1e4c91, #2a6ac9);
     color: white;
     cursor: pointer;
     width: 70px;
     height: 70px;
     border-radius: 50%;
-    border: 3px solid #1e4c91;
+    border: none;
     outline: none;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 28px;
     padding: 0;
     position: relative;
+    animation: pulse 2s infinite;
 }
 
 .collapsible:hover {
+    background: linear-gradient(135deg, #2a6ac9, #1e4c91);
     transform: scale(1.1);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
 
-/* Add a chat indicator bubble */
+/* Chat bubble indicator */
 .collapsible::after {
     content: "";
     position: absolute;
-    top: 5px;
-    right: 5px;
-    width: 15px;
-    height: 15px;
+    top: -3px;
+    right: -3px;
+    width: 20px;
+    height: 20px;
     background-color: #ff4d4d;
     border-radius: 50%;
-    border: 2px solid #fff;
+    border: 2px solid white;
     animation: pulse 1.5s infinite;
 }
 
+/* Pulse animation for the button */
 @keyframes pulse {
     0% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7);
+        box-shadow: 0 0 0 0 rgba(30, 76, 145, 0.7);
     }
     70% {
-        transform: scale(1);
-        box-shadow: 0 0 0 10px rgba(255, 77, 77, 0);
+        box-shadow: 0 0 0 10px rgba(30, 76, 145, 0);
     }
     100% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(255, 77, 77, 0);
+        box-shadow: 0 0 0 0 rgba(30, 76, 145, 0);
     }
+}
+
+/* Additional hover effect for the icon */
+.collapsible i {
+    transition: all 0.3s ease;
+}
+
+.collapsible:hover i {
+    transform: scale(1.1);
 }
 
 /* Collapsible Content - Chat Window */
@@ -753,6 +762,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     <!-- CHAT BAR BLOCK -->
     <div class="chat-bar-collapsible">
+        <button id="chat-button" type="button" class="collapsible">
+            <i class="fa fa-comments" aria-hidden="true"></i>
+        </button>
+        
         <div class="content">
             <div class="full-chat-block">
                 <!-- Message Container -->
@@ -796,10 +809,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             </div>
         </div>
-        
-        <button id="chat-button" type="button" class="collapsible">
-            <img src="images/doctor.jpg" alt="Chat with us" style="width: 40px; height: 40px; border-radius: 50%;">
-        </button>
     </div>
 
 
@@ -826,9 +835,18 @@ for (let i = 0; i < coll.length; i++) {
     coll[i].addEventListener("click", function () {
         this.classList.toggle("active");
 
-        // Content is now the previous sibling instead of next sibling
-        var content = this.previousElementSibling;
+        // Content is now the next sibling instead of previous sibling
+        var content = this.nextElementSibling;
         content.classList.toggle("active");
+        
+        // Add animation for showing/hiding content
+        if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+            content.style.opacity = 0;
+        } else {
+            content.style.maxHeight = content.scrollHeight + "px";
+            content.style.opacity = 1;
+        }
     });
 }
 
