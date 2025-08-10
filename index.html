@@ -229,6 +229,11 @@
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     margin-bottom: 15px;
     opacity: 0;
+    /* Position the chat window on the right side */
+    position: absolute;
+    right: 0;
+    bottom: 80px;
+    width: 350px;
 }
 
 .content.active {
@@ -284,6 +289,11 @@
     border-radius: 10px 10px 0 0;
     padding: 10px;
     border-top: 2px solid white;
+    /* Position the input area on the left side */
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: calc(100% - 100px);
 }
 
 #userInput {
@@ -762,10 +772,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     <!-- CHAT BAR BLOCK -->
     <div class="chat-bar-collapsible">
-        <button id="chat-button" type="button" class="collapsible">
-            <i class="fa fa-comments" aria-hidden="true"></i>
-        </button>
-        
         <div class="content">
             <div class="full-chat-block">
                 <!-- Message Container -->
@@ -809,6 +815,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
             </div>
         </div>
+        
+        <button id="chat-button" type="button" class="collapsible">
+            <i class="fa fa-comments" aria-hidden="true"></i>
+        </button>
     </div>
 
 
@@ -835,8 +845,8 @@ for (let i = 0; i < coll.length; i++) {
     coll[i].addEventListener("click", function () {
         this.classList.toggle("active");
 
-        // Content is now the next sibling instead of previous sibling
-        var content = this.nextElementSibling;
+        // Content is now the previous sibling instead of next sibling
+        var content = this.previousElementSibling;
         content.classList.toggle("active");
         
         // Add animation for showing/hiding content
