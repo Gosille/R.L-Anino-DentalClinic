@@ -237,9 +237,9 @@
     margin-bottom: 15px;
     opacity: 0;
     /* Position the chat window on the right side */
-    position: absolute;
-    right: 0;
-    bottom: 80px;
+    position: fixed;
+    right: 30px;
+    bottom: 100px;
     width: 370px;
 }
 
@@ -290,9 +290,8 @@
 .chat-container {
     max-height: 350px;
     width: 100%;
-    position: absolute;
-    bottom: 60px;
-    left: 0;
+    position: relative;
+    margin-bottom: 60px;
     scroll-behavior: smooth;
     hyphens: auto;
     overflow-y: auto;
@@ -323,9 +322,7 @@
     border-radius: 0 0 20px 20px;
     padding: 12px;
     border-top: 2px solid rgba(255, 255, 255, 0.3);
-    position: absolute;
-    left: 0;
-    bottom: 0;
+    position: relative;
     width: 100%;
 }
 
@@ -364,7 +361,6 @@
 }
 
 .chat-bar-icons i:hover {
-    transform: scale(1.2);
     background: rgba(255, 255, 255, 0.3);
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
