@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Test Login</title>
+</head>
+<body>
+    <h1>Test Login</h1>
+    <div id="result"></div>
+    
+    <!-- Include JavaScript Database -->
+    <script src="js/database.js"></script>
+    
+    <script>
+        // Test the database authentication
+        document.addEventListener('DOMContentLoaded', function() {
+            const resultDiv = document.getElementById('result');
+            
+            // Test admin login
+            try {
+                const admin = HMSDatabase.authenticate('admin', 'Test@12345', 'admin');
+                if (admin) {
+                    resultDiv.innerHTML += '<p>Admin login successful: ' + JSON.stringify(admin) + '</p>';
+                } else {
+                    resultDiv.innerHTML += '<p>Admin login failed</p>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML += '<p>Admin login error: ' + error.message + '</p>';
+            }
+            
+            // Test doctor login
+            try {
+                const doctor = HMSDatabase.authenticate('Marben@test.com', '123456', 'doctor');
+                if (doctor) {
+                    resultDiv.innerHTML += '<p>Doctor login successful: ' + JSON.stringify(doctor) + '</p>';
+                } else {
+                    resultDiv.innerHTML += '<p>Doctor login failed</p>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML += '<p>Doctor login error: ' + error.message + '</p>';
+            }
+            
+            // Test user login
+            try {
+                const user = HMSDatabase.authenticate('marbenbenetez@gmail.com', '123456', 'user');
+                if (user) {
+                    resultDiv.innerHTML += '<p>User login successful: ' + JSON.stringify(user) + '</p>';
+                } else {
+                    resultDiv.innerHTML += '<p>User login failed</p>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML += '<p>User login error: ' + error.message + '</p>';
+            }
+        });
+    </script>
+</body>
+</html>

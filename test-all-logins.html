@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Test All Logins</title>
+</head>
+<body>
+    <h1>Test All Logins</h1>
+    <div id="result"></div>
+    
+    <!-- Include JavaScript Database -->
+    <script src="js/database.js"></script>
+    
+    <script>
+        // Test all login types
+        document.addEventListener('DOMContentLoaded', function() {
+            const resultDiv = document.getElementById('result');
+            
+            // Test admin login
+            try {
+                resultDiv.innerHTML += '<h2>Testing Admin Login</h2>';
+                const admin = HMSDatabase.authenticate('admin', 'Test@12345', 'admin');
+                if (admin) {
+                    resultDiv.innerHTML += '<p style="color: green;">Admin login successful: ' + JSON.stringify(admin) + '</p>';
+                } else {
+                    resultDiv.innerHTML += '<p style="color: red;">Admin login failed</p>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML += '<p style="color: red;">Admin login error: ' + error.message + '</p>';
+            }
+            
+            // Test doctor login
+            try {
+                resultDiv.innerHTML += '<h2>Testing Doctor Login</h2>';
+                const doctor = HMSDatabase.authenticate('Marben@test.com', '123456', 'doctor');
+                if (doctor) {
+                    resultDiv.innerHTML += '<p style="color: green;">Doctor login successful: ' + JSON.stringify(doctor) + '</p>';
+                } else {
+                    resultDiv.innerHTML += '<p style="color: red;">Doctor login failed</p>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML += '<p style="color: red;">Doctor login error: ' + error.message + '</p>';
+            }
+            
+            // Test user login
+            try {
+                resultDiv.innerHTML += '<h2>Testing User Login</h2>';
+                const user = HMSDatabase.authenticate('marbenbenetez@gmail.com', '123456', 'user');
+                if (user) {
+                    resultDiv.innerHTML += '<p style="color: green;">User login successful: ' + JSON.stringify(user) + '</p>';
+                } else {
+                    resultDiv.innerHTML += '<p style="color: red;">User login failed</p>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML += '<p style="color: red;">User login error: ' + error.message + '</p>';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -35,14 +35,8 @@
 		</style>
 	</head>
 	<body class="login">
-		<!-- Include Firebase SDK -->
-		<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-		<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-		<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-		
-		<!-- Include Firebase Configuration and Database -->
-		<script src="../js/firebase-config.js"></script>
-		<script src="../js/firebase-database.js"></script>
+		<!-- Include JavaScript Database -->
+		<script src="../js/database.js"></script>
 		
 		<div class="login-wrapper">
 			<div class="main-login">
@@ -88,8 +82,6 @@
 		<script src="assets/js/jquery.validate.min.js"></script>
 	
 		<script src="assets/js/main.js"></script>
-
-		<script src="assets/js/login.js"></script>
 		<script>
 			// Handle user login form submission
 			document.getElementById('userLoginForm').addEventListener('submit', async function(e) {
@@ -100,17 +92,17 @@
 				const resultDiv = document.getElementById('loginResult');
 				
 				try {
-					// Check if FirebaseHMS is available
-					if (typeof FirebaseHMS === 'undefined') {
-						console.error('FirebaseHMS is not defined');
+					// Check if HMSDatabase is available
+					if (typeof HMSDatabase === 'undefined') {
+						console.error('HMSDatabase is not defined');
 						resultDiv.className = 'login-result error';
-						resultDiv.innerHTML = '<p>Error: Firebase database not loaded</p>';
+						resultDiv.innerHTML = '<p>Error: Database not loaded</p>';
 						resultDiv.style.display = 'block';
 						return;
 					}
 					
-					// Authenticate user with Firebase
-					const user = await FirebaseHMS.authenticate(email, password, 'user');
+					// Authenticate user with local database
+					const user = HMSDatabase.authenticate(email, password, 'user');
 					
 					if (user) {
 						resultDiv.className = 'login-result success';

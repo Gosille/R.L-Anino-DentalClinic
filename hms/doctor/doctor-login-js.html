@@ -36,15 +36,8 @@
 	</head>
 
 <body class="login">
-	<!-- Include Firebase SDK -->
-	<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-	
-	<!-- Include Firebase Configuration and Database -->
-	<script src="../../js/firebase-config.js"></script>
-	<script src="../../js/firebase-database.js"></script>
-
+	<!-- Include JavaScript Database -->
+	<script src="../../js/database.js"></script>
 	
 		<div class="login-wrapper">
 			<div class="main-login">
@@ -106,17 +99,17 @@
 				const resultDiv = document.getElementById('loginResult');
 				
 				try {
-					// Check if FirebaseHMS is available
-					if (typeof FirebaseHMS === 'undefined') {
-						console.error('FirebaseHMS is not defined');
+					// Check if HMSDatabase is available
+					if (typeof HMSDatabase === 'undefined') {
+						console.error('HMSDatabase is not defined');
 						resultDiv.className = 'login-result error';
-						resultDiv.innerHTML = '<p>Error: Firebase database not loaded</p>';
+						resultDiv.innerHTML = '<p>Error: Database not loaded</p>';
 						resultDiv.style.display = 'block';
 						return;
 					}
 					
-					// Authenticate doctor user with Firebase
-					const doctor = await FirebaseHMS.authenticate(email, password, 'doctor');
+					// Authenticate doctor user with local database
+					const doctor = HMSDatabase.authenticate(email, password, 'doctor');
 					
 					if (doctor) {
 						resultDiv.className = 'login-result success';
