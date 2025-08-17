@@ -288,6 +288,18 @@ const HMSDatabase = {
         regDate: "2023-04-24 00:09:15",
         updationDate: "2023-12-04 01:43:25"
       }
+    ],
+    
+    receptionists: [
+      {
+        id: 1,
+        username: "receptionist",
+        password: "Reception123",
+        fullName: "Receptionist User",
+        email: "receptionist@clinic.com",
+        creationDate: "2023-01-01 09:00:00",
+        updationDate: null
+      }
     ]
   },
   
@@ -406,6 +418,8 @@ const HMSDatabase = {
       if (!user) {
         user = this.getByField('doctors', 'doctorName', email)[0];
       }
+    } else if (userType === 'receptionist') {
+      user = this.getByField('receptionists', 'username', email)[0];
     } else {
       user = this.getByField('users', 'email', email)[0];
     }
