@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>User  | Dashboard</title>
+		<title>User | Edit Profile</title>
 		
 		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
@@ -20,6 +20,25 @@
 		
 		<!-- Include JavaScript Database -->
 		<script src="../js/database.js"></script>
+		
+		<style>
+			.profile-result {
+				margin-top: 15px;
+				padding: 10px;
+				border-radius: 5px;
+				display: none;
+			}
+			.profile-result.success {
+				background-color: #d4edda;
+				color: #155724;
+				border: 1px solid #c3e6cb;
+			}
+			.profile-result.error {
+				background-color: #f8d7da;
+				color: #721c24;
+				border: 1px solid #f5c6cb;
+			}
+		</style>
 	</head>
 	<body>
 		<div id="app">		
@@ -177,68 +196,89 @@
 						<section id="page-title">
 							<div class="row">
 								<div class="col-sm-8">
-									<h1 class="mainTitle">User | Dashboard</h1>
+									<h1 class="mainTitle">User | Edit Profile</h1>
 								</div>
 								<ol class="breadcrumb">
 									<li>
-										<span>User</span>
+										<span>User </span>
 									</li>
 									<li class="active">
-										<span>Dashboard</span>
+										<span>Edit Profile</span>
 									</li>
 								</ol>
 							</div>
 						</section>
 						<!-- end: PAGE TITLE -->
 						<!-- start: BASIC EXAMPLE -->
-							<div class="container-fluid container-fullw bg-white">
+						<div class="container-fluid container-fullw bg-white">
 							<div class="row">
-								<div class="col-sm-4">
-									<div class="panel panel-white no-radius text-center">
-										<div class="panel-body">
-											<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i class="fa fa-smile-o fa-stack-1x fa-inverse"></i> </span>
-											<h2 class="StepTitle">My Profile</h2>
-											
-											<p class="links cl-effect-1">
-												<a href="edit-profile-js.html">
-													Update Profile
-												</a>
-											</p>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-4">
-									<div class="panel panel-white no-radius text-center">
-										<div class="panel-body">
-											<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i class="fa fa-paperclip fa-stack-1x fa-inverse"></i> </span>
-											<h2 class="StepTitle">My Appointments</h2>
-										
-											<p class="cl-effect-1">
-												<a href="appointment-history-js.html">
-													View Appointment History
-												</a>
-											</p>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-4">
-									<div class="panel panel-white no-radius text-center">
-										<div class="panel-body">
-											<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i class="fa fa-terminal fa-stack-1x fa-inverse"></i> </span>
-											<h2 class="StepTitle"> Book My Appointment</h2>
-											
-											<p class="links cl-effect-1">
-												<a href="book-appointment-js.html">
-													Book Appointment
-												</a>
-											</p>
+								<div class="col-md-12">
+									<div id="profileResult" class="profile-result"></div>
+									<div class="row margin-top-30">
+										<div class="col-lg-8 col-md-12">
+											<div class="panel panel-white">
+												<div class="panel-heading">
+													<h5 class="panel-title">Edit Profile</h5>
+												</div>
+												<div class="panel-body">
+													<h4 id="profileName">User's Profile</h4>
+													<p><b>Profile Reg. Date: </b><span id="regDate"></span></p>
+													<p><b>Profile Last Updation Date: </b><span id="updationDate"></span></p>
+													<hr />
+													<form role="form" id="editProfileForm">
+														<div class="form-group">
+															<label for="fname">
+																 User Name
+															</label>
+															<input type="text" name="fname" id="fname" class="form-control" required>
+														</div>
+
+														<div class="form-group">
+															<label for="address">
+																 Address
+															</label>
+															<textarea name="address" id="address" class="form-control"></textarea>
+														</div>
+														
+														<div class="form-group">
+															<label for="city">
+																 City
+															</label>
+															<input type="text" name="city" id="city" class="form-control" required>
+														</div>
+														
+														<div class="form-group">
+															<label for="gender">
+																Gender
+															</label>
+															<select name="gender" id="gender" class="form-control" required>
+																<option value="">Select Gender</option>
+																<option value="male">Male</option>	
+																<option value="female">Female</option>	
+																<option value="other">Other</option>	
+															</select>
+														</div>
+														
+														<div class="form-group">
+															<label for="uemail">
+																 User Email
+															</label>
+															<input type="email" name="uemail" id="uemail" class="form-control" readonly>
+															<a href="change-emaild.html">Update your email id</a>
+														</div>
+														
+														<button type="submit" class="btn btn-o btn-primary">
+															Update
+														</button>
+													</form>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-			
-						<!-- end: SELECT BOXES -->
+						<!-- end: BASIC EXAMPLE -->
 					</div>
 				</div>
 			</div>
@@ -289,8 +329,97 @@
 				const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 				if (currentUser && currentUser.data) {
 					document.getElementById('userName').textContent = currentUser.data.fullName || currentUser.data.username || 'User';
+					
+					// Load user profile data
+					loadUserProfile(currentUser.data);
 				}
+				
+				// Handle form submission
+				document.getElementById('editProfileForm').addEventListener('submit', function(e) {
+					e.preventDefault();
+					updateUserProfile();
+				});
 			});
+			
+			function loadUserProfile(userData) {
+				// Load user profile data from the database
+				try {
+					// Get user data from the database
+					const user = HMSDatabase.getByField('users', 'id', userData.id)[0] || userData;
+					
+					// Set profile data
+					document.getElementById('profileName').textContent = (user.fullName || 'User') + "'s Profile";
+					document.getElementById('regDate').textContent = user.regDate || 'N/A';
+					document.getElementById('updationDate').textContent = user.updationDate || 'N/A';
+					
+					// Set form values
+					document.getElementById('fname').value = user.fullName || '';
+					document.getElementById('address').value = user.address || '';
+					document.getElementById('city').value = user.city || '';
+					document.getElementById('gender').value = user.gender || '';
+					document.getElementById('uemail').value = user.email || '';
+				} catch (error) {
+					console.error('Error loading user profile:', error);
+					showResult('Error loading profile data', 'error');
+				}
+			}
+			
+			function updateUserProfile() {
+				try {
+					// Get form values
+					const fullName = document.getElementById('fname').value;
+					const address = document.getElementById('address').value;
+					const city = document.getElementById('city').value;
+					const gender = document.getElementById('gender').value;
+					const email = document.getElementById('uemail').value;
+					
+					// Get current user
+					const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+					if (!currentUser || !currentUser.data) {
+						showResult('User not logged in', 'error');
+						return;
+					}
+					
+					// Update user data in the database
+					const updatedUser = HMSDatabase.update('users', currentUser.data.id, {
+						fullName: fullName,
+						address: address,
+						city: city,
+						gender: gender,
+						email: email,
+						updationDate: new Date().toLocaleString()
+					});
+					
+					if (updatedUser) {
+						// Update localStorage
+						currentUser.data = updatedUser;
+						localStorage.setItem('currentUser', JSON.stringify(currentUser));
+						
+						// Update UI
+						document.getElementById('profileName').textContent = (updatedUser.fullName || 'User') + "'s Profile";
+						document.getElementById('updationDate').textContent = updatedUser.updationDate || 'N/A';
+						
+						showResult('Profile updated successfully', 'success');
+					} else {
+						showResult('Error updating profile', 'error');
+					}
+				} catch (error) {
+					console.error('Error updating profile:', error);
+					showResult('Error updating profile: ' + error.message, 'error');
+				}
+			}
+			
+			function showResult(message, type) {
+				const resultDiv = document.getElementById('profileResult');
+				resultDiv.className = 'profile-result ' + type;
+				resultDiv.innerHTML = '<p>' + message + '</p>';
+				resultDiv.style.display = 'block';
+				
+				// Hide after 5 seconds
+				setTimeout(function() {
+					resultDiv.style.display = 'none';
+				}, 5000);
+			}
 		</script>
 		<!-- end: JavaScript Event Handlers for this page -->
 		<!-- end: CLIP-TWO JAVASCRIPTS -->

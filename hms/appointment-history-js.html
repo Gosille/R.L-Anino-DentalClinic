@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>User  | Dashboard</title>
+		<title>User | Appointment History</title>
 		
 		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
@@ -20,6 +20,25 @@
 		
 		<!-- Include JavaScript Database -->
 		<script src="../js/database.js"></script>
+		
+		<style>
+			.appointment-result {
+				margin-top: 15px;
+				padding: 10px;
+				border-radius: 5px;
+				display: none;
+			}
+			.appointment-result.success {
+				background-color: #d4edda;
+				color: #155724;
+				border: 1px solid #c3e6cb;
+			}
+			.appointment-result.error {
+				background-color: #f8d7da;
+				color: #721c24;
+				border: 1px solid #f5c6cb;
+			}
+		</style>
 	</head>
 	<body>
 		<div id="app">		
@@ -177,68 +196,45 @@
 						<section id="page-title">
 							<div class="row">
 								<div class="col-sm-8">
-									<h1 class="mainTitle">User | Dashboard</h1>
+									<h1 class="mainTitle">User | Appointment History</h1>
 								</div>
 								<ol class="breadcrumb">
 									<li>
-										<span>User</span>
+										<span>User </span>
 									</li>
 									<li class="active">
-										<span>Dashboard</span>
+										<span>Appointment History</span>
 									</li>
 								</ol>
 							</div>
 						</section>
 						<!-- end: PAGE TITLE -->
 						<!-- start: BASIC EXAMPLE -->
-							<div class="container-fluid container-fullw bg-white">
+						<div class="container-fluid container-fullw bg-white">
 							<div class="row">
-								<div class="col-sm-4">
-									<div class="panel panel-white no-radius text-center">
-										<div class="panel-body">
-											<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i class="fa fa-smile-o fa-stack-1x fa-inverse"></i> </span>
-											<h2 class="StepTitle">My Profile</h2>
-											
-											<p class="links cl-effect-1">
-												<a href="edit-profile-js.html">
-													Update Profile
-												</a>
-											</p>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-4">
-									<div class="panel panel-white no-radius text-center">
-										<div class="panel-body">
-											<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i class="fa fa-paperclip fa-stack-1x fa-inverse"></i> </span>
-											<h2 class="StepTitle">My Appointments</h2>
-										
-											<p class="cl-effect-1">
-												<a href="appointment-history-js.html">
-													View Appointment History
-												</a>
-											</p>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-4">
-									<div class="panel panel-white no-radius text-center">
-										<div class="panel-body">
-											<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i class="fa fa-terminal fa-stack-1x fa-inverse"></i> </span>
-											<h2 class="StepTitle"> Book My Appointment</h2>
-											
-											<p class="links cl-effect-1">
-												<a href="book-appointment-js.html">
-													Book Appointment
-												</a>
-											</p>
-										</div>
-									</div>
+								<div class="col-md-12">
+									<div id="appointmentResult" class="appointment-result"></div>
+									<table class="table table-hover" id="appointmentTable">
+										<thead>
+											<tr>
+												<th class="center">#</th>
+												<th class="hidden-xs">Dentist Name</th>
+												<th>Specialization</th>
+												<th>Consultancy Fee</th>
+												<th>Appointment Date / Time </th>
+												<th>Appointment Creation Date  </th>
+												<th>Current Status</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody id="appointmentTableBody">
+											<!-- Appointment data will be loaded here -->
+										</tbody>
+									</table>
 								</div>
 							</div>
 						</div>
-			
-						<!-- end: SELECT BOXES -->
+						<!-- end: BASIC EXAMPLE -->
 					</div>
 				</div>
 			</div>
@@ -289,8 +285,114 @@
 				const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 				if (currentUser && currentUser.data) {
 					document.getElementById('userName').textContent = currentUser.data.fullName || currentUser.data.username || 'User';
+					
+					// Load appointment history
+					loadAppointmentHistory(currentUser.data);
 				}
 			});
+			
+			function loadAppointmentHistory(userData) {
+				try {
+					// Get appointments for the current user
+					const appointments = HMSDatabase.getByField('appointment', 'userId', userData.id);
+					
+					// Get doctors for name lookup
+					const doctors = HMSDatabase.getAll('doctors');
+					
+					// Clear existing table content
+					const tableBody = document.getElementById('appointmentTableBody');
+					tableBody.innerHTML = '';
+					
+					// Populate table with appointment data
+					appointments.forEach(function(appointment, index) {
+						// Find doctor name
+						const doctor = doctors.find(d => d.id === appointment.doctorId);
+						const doctorName = doctor ? doctor.doctorName : 'Unknown';
+						
+						// Determine status
+						let status = 'Pending';
+						if ((appointment.userStatus === 1) && (appointment.doctorStatus === 1)) {
+							status = 'Active';
+						} else if ((appointment.userStatus === 0) && (appointment.doctorStatus === 1)) {
+							status = 'Canceled by You';
+						} else if ((appointment.userStatus === 1) && (appointment.doctorStatus === 0)) {
+							status = 'Canceled by Doctor';
+						} else if ((appointment.userStatus === 1) && (appointment.doctorStatus === 2)) {
+							status = 'Approved';
+						}
+						
+						// Create table row
+						const row = document.createElement('tr');
+						row.innerHTML = `
+							<td class="center">${index + 1}.</td>
+							<td class="hidden-xs">${doctorName}</td>
+							<td>${appointment.doctorSpecialization}</td>
+							<td>${appointment.consultancyFees}</td>
+							<td>${appointment.appointmentDate} / ${appointment.appointmentTime}</td>
+							<td>${appointment.postingDate}</td>
+							<td>${status}</td>
+							<td>
+								<div class="visible-md visible-lg hidden-sm hidden-xs">
+									${(appointment.userStatus === 1 && appointment.doctorStatus === 1) ? 
+										`<button class="btn btn-transparent btn-xs tooltips cancel-btn" data-id="${appointment.id}" title="Cancel Appointment">Cancel</button>` : 
+										'Canceled'}
+								</div>
+							</td>
+						`;
+						
+						tableBody.appendChild(row);
+					});
+					
+					// Add event listeners to cancel buttons
+					document.querySelectorAll('.cancel-btn').forEach(function(button) {
+						button.addEventListener('click', function() {
+							const appointmentId = this.getAttribute('data-id');
+							cancelAppointment(appointmentId);
+						});
+					});
+				} catch (error) {
+					console.error('Error loading appointment history:', error);
+					showResult('Error loading appointment history: ' + error.message, 'error');
+				}
+			}
+			
+			function cancelAppointment(appointmentId) {
+				if (confirm('Are you sure you want to cancel this appointment?')) {
+					try {
+						// Update appointment status in the database
+						const updatedAppointment = HMSDatabase.update('appointment', parseInt(appointmentId), {
+							userStatus: 0
+						});
+						
+						if (updatedAppointment) {
+							showResult('Appointment canceled successfully', 'success');
+							
+							// Reload appointment history
+							const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+							if (currentUser && currentUser.data) {
+								loadAppointmentHistory(currentUser.data);
+							}
+						} else {
+							showResult('Error canceling appointment', 'error');
+						}
+					} catch (error) {
+						console.error('Error canceling appointment:', error);
+						showResult('Error canceling appointment: ' + error.message, 'error');
+					}
+				}
+			}
+			
+			function showResult(message, type) {
+				const resultDiv = document.getElementById('appointmentResult');
+				resultDiv.className = 'appointment-result ' + type;
+				resultDiv.innerHTML = '<p>' + message + '</p>';
+				resultDiv.style.display = 'block';
+				
+				// Hide after 5 seconds
+				setTimeout(function() {
+					resultDiv.style.display = 'none';
+				}, 5000);
+			}
 		</script>
 		<!-- end: JavaScript Event Handlers for this page -->
 		<!-- end: CLIP-TWO JAVASCRIPTS -->

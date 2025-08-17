@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>User  | Dashboard</title>
+		<title>User | Book Appointment</title>
 		
 		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
@@ -20,6 +20,25 @@
 		
 		<!-- Include JavaScript Database -->
 		<script src="../js/database.js"></script>
+		
+		<style>
+			.appointment-result {
+				margin-top: 15px;
+				padding: 10px;
+				border-radius: 5px;
+				display: none;
+			}
+			.appointment-result.success {
+				background-color: #d4edda;
+				color: #155724;
+				border: 1px solid #c3e6cb;
+			}
+			.appointment-result.error {
+				background-color: #f8d7da;
+				color: #721c24;
+				border: 1px solid #f5c6cb;
+			}
+		</style>
 	</head>
 	<body>
 		<div id="app">		
@@ -177,68 +196,85 @@
 						<section id="page-title">
 							<div class="row">
 								<div class="col-sm-8">
-									<h1 class="mainTitle">User | Dashboard</h1>
+									<h1 class="mainTitle">User | Book Appointment</h1>
 								</div>
 								<ol class="breadcrumb">
 									<li>
 										<span>User</span>
 									</li>
 									<li class="active">
-										<span>Dashboard</span>
+										<span>Book Appointment</span>
 									</li>
 								</ol>
 							</div>
 						</section>
 						<!-- end: PAGE TITLE -->
 						<!-- start: BASIC EXAMPLE -->
-							<div class="container-fluid container-fullw bg-white">
+						<div class="container-fluid container-fullw bg-white">
 							<div class="row">
-								<div class="col-sm-4">
-									<div class="panel panel-white no-radius text-center">
-										<div class="panel-body">
-											<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i class="fa fa-smile-o fa-stack-1x fa-inverse"></i> </span>
-											<h2 class="StepTitle">My Profile</h2>
-											
-											<p class="links cl-effect-1">
-												<a href="edit-profile-js.html">
-													Update Profile
-												</a>
-											</p>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-4">
-									<div class="panel panel-white no-radius text-center">
-										<div class="panel-body">
-											<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i class="fa fa-paperclip fa-stack-1x fa-inverse"></i> </span>
-											<h2 class="StepTitle">My Appointments</h2>
-										
-											<p class="cl-effect-1">
-												<a href="appointment-history-js.html">
-													View Appointment History
-												</a>
-											</p>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-4">
-									<div class="panel panel-white no-radius text-center">
-										<div class="panel-body">
-											<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i class="fa fa-terminal fa-stack-1x fa-inverse"></i> </span>
-											<h2 class="StepTitle"> Book My Appointment</h2>
-											
-											<p class="links cl-effect-1">
-												<a href="book-appointment-js.html">
-													Book Appointment
-												</a>
-											</p>
+								<div class="col-md-12">
+									<div id="appointmentResult" class="appointment-result"></div>
+									<div class="row margin-top-30">
+										<div class="col-lg-8 col-md-12">
+											<div class="panel panel-white">
+												<div class="panel-heading">
+													<h5 class="panel-title">Book Appointment</h5>
+												</div>
+												<div class="panel-body">
+													<form role="form" id="bookAppointmentForm">
+														<div class="form-group">
+															<label for="Doctorspecialization">
+																Specialization
+															</label>
+															<select name="Doctorspecialization" id="Doctorspecialization" class="form-control" required>
+																<option value="">Select Specialization</option>
+																<!-- Specializations will be loaded here -->
+															</select>
+														</div>
+
+														<div class="form-group">
+															<label for="doctor">
+																Dentist
+															</label>
+															<select name="doctor" id="doctor" class="form-control" required>
+																<option value="">Select Dentist</option>
+																<!-- Doctors will be loaded here -->
+															</select>
+														</div>
+
+														<div class="form-group">
+															<label for="fees">
+																Consultancy Fees
+															</label>
+															<input type="text" name="fees" id="fees" class="form-control" readonly>
+														</div>
+														
+														<div class="form-group">
+															<label for="appdate">
+																Date
+															</label>
+															<input class="form-control datepicker" name="appdate" id="appdate" required data-date-format="yyyy-mm-dd">
+														</div>
+														
+														<div class="form-group">
+															<label for="apptime">
+																Time
+															</label>
+															<input class="form-control" name="apptime" id="apptime" required>
+														</div>
+														
+														<button type="submit" class="btn btn-o btn-primary">
+															Submit
+														</button>
+													</form>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-			
-						<!-- end: SELECT BOXES -->
+						<!-- end: BASIC EXAMPLE -->
 					</div>
 				</div>
 			</div>
@@ -282,6 +318,18 @@
 				Main.init();
 				FormElements.init();
 				
+				// Initialize datepicker
+				$('.datepicker').datepicker({
+					format: 'yyyy-mm-dd',
+					startDate: '0d' // Start from today
+				});
+				
+				// Initialize timepicker
+				$('#apptime').timepicker({
+					minuteStep: 30,
+					showMeridian: false
+				});
+				
 				// Set current year in footer
 				document.querySelector('.current-year').textContent = new Date().getFullYear();
 				
@@ -290,7 +338,178 @@
 				if (currentUser && currentUser.data) {
 					document.getElementById('userName').textContent = currentUser.data.fullName || currentUser.data.username || 'User';
 				}
+				
+				// Load specializations and doctors
+				loadSpecializations();
+				loadDoctors();
+				
+				// Handle specialization change
+				document.getElementById('Doctorspecialization').addEventListener('change', function() {
+					const specialization = this.value;
+					filterDoctorsBySpecialization(specialization);
+				});
+				
+				// Handle doctor change
+				document.getElementById('doctor').addEventListener('change', function() {
+					const doctorId = this.value;
+					if (doctorId) {
+						loadDoctorFees(doctorId);
+					}
+				});
+				
+				// Handle form submission
+				document.getElementById('bookAppointmentForm').addEventListener('submit', function(e) {
+					e.preventDefault();
+					bookAppointment();
+				});
 			});
+			
+			function loadSpecializations() {
+				try {
+					// Get specializations from the database
+					const specializations = HMSDatabase.getAll('doctorspecilization');
+					const select = document.getElementById('Doctorspecialization');
+					
+					// Clear existing options except the first one
+					select.innerHTML = '<option value="">Select Specialization</option>';
+					
+					// Add specializations to the select
+					specializations.forEach(function(spec) {
+						const option = document.createElement('option');
+						option.value = spec.specilization;
+						option.textContent = spec.specilization;
+						select.appendChild(option);
+					});
+				} catch (error) {
+					console.error('Error loading specializations:', error);
+					showResult('Error loading specializations: ' + error.message, 'error');
+				}
+			}
+			
+			function loadDoctors() {
+				try {
+					// Get doctors from the database
+					const doctors = HMSDatabase.getAll('doctors');
+					window.allDoctors = doctors; // Store for filtering
+				} catch (error) {
+					console.error('Error loading doctors:', error);
+					showResult('Error loading doctors: ' + error.message, 'error');
+				}
+			}
+			
+			function filterDoctorsBySpecialization(specialization) {
+				try {
+					const select = document.getElementById('doctor');
+					
+					// Clear existing options except the first one
+					select.innerHTML = '<option value="">Select Dentist</option>';
+					
+					// Filter doctors by specialization
+					const filteredDoctors = window.allDoctors.filter(function(doctor) {
+						return doctor.specilization === specialization;
+					});
+					
+					// Add filtered doctors to the select
+					filteredDoctors.forEach(function(doctor) {
+						const option = document.createElement('option');
+						option.value = doctor.id;
+						option.textContent = doctor.doctorName;
+						select.appendChild(option);
+					});
+				} catch (error) {
+					console.error('Error filtering doctors:', error);
+					showResult('Error filtering doctors: ' + error.message, 'error');
+				}
+			}
+			
+			function loadDoctorFees(doctorId) {
+				try {
+					// Find doctor by ID
+					const doctor = window.allDoctors.find(function(d) {
+						return d.id === parseInt(doctorId);
+					});
+					
+					// Set fees
+					if (doctor) {
+						document.getElementById('fees').value = doctor.docFees || '0';
+					}
+				} catch (error) {
+					console.error('Error loading doctor fees:', error);
+					showResult('Error loading doctor fees: ' + error.message, 'error');
+				}
+			}
+			
+			function bookAppointment() {
+				try {
+					// Get form values
+					const specialization = document.getElementById('Doctorspecialization').value;
+					const doctorId = document.getElementById('doctor').value;
+					const fees = document.getElementById('fees').value;
+					const appDate = document.getElementById('appdate').value;
+					const appTime = document.getElementById('apptime').value;
+					
+					// Validate form
+					if (!specialization || !doctorId || !fees || !appDate || !appTime) {
+						showResult('Please fill in all required fields', 'error');
+						return;
+					}
+					
+					// Get current user
+					const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+					if (!currentUser || !currentUser.data) {
+						showResult('User not logged in', 'error');
+						return;
+					}
+					
+					// Find doctor name
+					const doctor = window.allDoctors.find(function(d) {
+						return d.id === parseInt(doctorId);
+					});
+					const doctorName = doctor ? doctor.doctorName : 'Unknown';
+					
+					// Create appointment object
+					const appointment = {
+						doctorSpecialization: specialization,
+						doctorId: parseInt(doctorId),
+						userId: currentUser.data.id,
+						consultancyFees: fees,
+						appointmentDate: appDate,
+						appointmentTime: appTime,
+						postingDate: new Date().toLocaleString(),
+						userStatus: 1,
+						doctorStatus: 1,
+						updationDate: null
+					};
+					
+					// Add appointment to the database
+					const newAppointment = HMSDatabase.add('appointment', appointment);
+					
+					if (newAppointment) {
+						showResult('Appointment booked successfully', 'success');
+						
+						// Reset form
+						document.getElementById('bookAppointmentForm').reset();
+						document.getElementById('fees').value = '';
+					} else {
+						showResult('Error booking appointment', 'error');
+					}
+				} catch (error) {
+					console.error('Error booking appointment:', error);
+					showResult('Error booking appointment: ' + error.message, 'error');
+				}
+			}
+			
+			function showResult(message, type) {
+				const resultDiv = document.getElementById('appointmentResult');
+				resultDiv.className = 'appointment-result ' + type;
+				resultDiv.innerHTML = '<p>' + message + '</p>';
+				resultDiv.style.display = 'block';
+				
+				// Hide after 5 seconds
+				setTimeout(function() {
+					resultDiv.style.display = 'none';
+				}, 5000);
+			}
 		</script>
 		<!-- end: JavaScript Event Handlers for this page -->
 		<!-- end: CLIP-TWO JAVASCRIPTS -->
