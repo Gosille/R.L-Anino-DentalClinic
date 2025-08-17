@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Receptionist-Login</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta content="" name="description" />
+		<meta content="" name="author" />
+		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+		<link rel="stylesheet" href="assets/css/font-awesome.min.css">
+		<link rel="stylesheet" href="assets/css/themify-icons.min.css">
+		<link href="assets/css/animate.min.css" rel="stylesheet" media="screen">
+		<link href="assets/css/perfect-scrollbar.min.css" rel="stylesheet" media="screen">
+		<link href="assets/css/switchery.min.css" rel="stylesheet" media="screen">
+		<link rel="stylesheet" href="assets/css/styles.css">
+		<link rel="stylesheet" href="assets/css/plugins.css">
+		<link rel="shortcut icon" href="assets/images/CropLogo.png">
+		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
+		
+		<style>
+			.login-result {
+				margin-top: 15px;
+				padding: 10px;
+				border-radius: 5px;
+				display: none;
+			}
+			.login-result.success {
+				background-color: #d4edda;
+				color: #155724;
+				border: 1px solid #c3e6cb;
+			}
+			.login-result.error {
+				background-color: #f8d7da;
+				color: #721c24;
+				border: 1px solid #f5c6cb;
+			}
+		</style>
+	</head>
+	
+	<body class="login">
+		<!-- Include JavaScript Database -->
+		<script src="../../js/database.js"></script>
+	
+		<div class="login-wrapper">
+			<div class="main-login">
+				<!-- Logo & Title -->
+				<div class="logo">
+					<a href="../../index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: white;">
+						<img src="assets/images/BLogo.png" alt="RLA Logo" style="height: 40px; width: auto;">
+						<h2 style="margin: 0; font-size: 20px;">RLA Dental | Receptionist Login</h2>
+					</a>
+				</div>
+
+				<!-- Form -->
+				<div class="box-login">
+					<form class="form-login" id="receptionistLoginForm">
+						<fieldset>
+							<legend>Sign in to your account</legend>
+							<p>Please enter your username and password to log in.</p>
+							<div class="form-group">
+								<input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+							</div>
+							<div class="form-group">
+								<input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+							</div>
+							<button type="submit" class="btn btn-primary" name="submit">Login</button>
+							<div class="links">
+								<a href="../../index.html">Back to Home Page</a>
+							</div>
+							<div id="loginResult" class="login-result"></div>
+						</fieldset>
+					</form>
+				</div>
+
+				<!-- Footer -->
+				<div class="copyright">
+					<span class="text-bold text-uppercase">Hospital Management System</span>
+				</div>
+			</div>
+		</div>
+		
+		<script>
+			// Handle receptionist login form submission
+			document.getElementById('receptionistLoginForm').addEventListener('submit', async function(e) {
+				e.preventDefault();
+				
+				const username = document.getElementById('username').value;
+				const password = document.getElementById('password').value;
+				const resultDiv = document.getElementById('loginResult');
+				
+				try {
+					// Check if HMSDatabase is available
+					if (typeof HMSDatabase === 'undefined') {
+						console.error('HMSDatabase is not defined');
+						resultDiv.className = 'login-result error';
+						resultDiv.innerHTML = '<p>Error: Database not loaded</p>';
+						resultDiv.style.display = 'block';
+						return;
+					}
+					
+					// Authenticate receptionist user with local database
+					const receptionist = HMSDatabase.authenticate(username, password, 'receptionist');
+					
+					if (receptionist) {
+						resultDiv.className = 'login-result success';
+						resultDiv.innerHTML = '<p>Login successful! Redirecting to dashboard...</p>';
+						resultDiv.style.display = 'block';
+						
+						// Store user info in localStorage
+						localStorage.setItem('currentUser', JSON.stringify({
+							type: 'receptionist',
+							data: receptionist
+						}));
+						
+						// Redirect to receptionist dashboard after a short delay
+						setTimeout(function() {
+							window.location.href = 'dashboard-js.html';
+						}, 1000);
+					} else {
+						resultDiv.className = 'login-result error';
+						resultDiv.innerHTML = '<p>Invalid username or password. Please try again.</p>';
+						resultDiv.style.display = 'block';
+					}
+				} catch (error) {
+					console.error('Error during login:', error);
+					resultDiv.className = 'login-result error';
+					resultDiv.innerHTML = '<p>Error: ' + error.message + '</p>';
+					resultDiv.style.display = 'block';
+				}
+			});
+			
+			// Set default values for testing
+			document.addEventListener('DOMContentLoaded', function() {
+				document.getElementById('username').value = 'receptionist';
+				document.getElementById('password').value = 'Reception123';
+			});
+		</script>
+	</body>
+	<!-- end: BODY -->
+</html>

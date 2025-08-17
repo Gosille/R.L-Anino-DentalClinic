@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Receptionist | Appointment History</title>
+		
+		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="vendor/fontawesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="vendor/themify-icons/themify-icons.min.css">
+		<link href="vendor/animate.css/animate.min.css" rel="stylesheet" media="screen">
+		<link href="vendor/perfect-scrollbar/perfect-scrollbar.min.css" rel="stylesheet" media="screen">
+		<link href="vendor/switchery/switchery.min.css" rel="stylesheet" media="screen">
+		<link href="vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" media="screen">
+		<link href="vendor/select2/select2.min.css" rel="stylesheet" media="screen">
+		<link href="vendor/bootstrap-datepicker/bootstrap-datepicker3.standalone.min.css" rel="stylesheet" media="screen">
+		<link href="vendor/bootstrap-timepicker/bootstrap-timepicker.min.css" rel="stylesheet" media="screen">
+		<link rel="stylesheet" href="assets/css/styles.css">
+		<link rel="stylesheet" href="assets/css/plugins.css">
+		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
+		
+		<!-- Include JavaScript Database -->
+		<script src="../../js/database.js"></script>
+		
+		<style>
+			.appointment-result {
+				margin-top: 15px;
+				padding: 10px;
+				border-radius: 5px;
+				display: none;
+			}
+			.appointment-result.success {
+				background-color: #d4edda;
+				color: #155724;
+				border: 1px solid #c3e6cb;
+			}
+			.appointment-result.error {
+				background-color: #f8d7da;
+				color: #721c24;
+				border: 1px solid #f5c6cb;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">		
+			<!-- Sidebar -->
+			<div class="sidebar app-aside" id="sidebar">
+				<div class="sidebar-container perfect-scrollbar">
+					<nav>
+						<!-- start: SEARCH FORM -->
+						<div class="search-form">
+							<a class="s-open" href="#">
+								<i class="ti-search"></i>
+							</a>
+							<form class="navbar-form" role="search">
+								<a class="s-remove" href="#" target=".navbar-form">
+									<i class="ti-close"></i>
+								</a>
+								<div class="form-group">
+									<input type="text" class="form-control" placeholder="Search...">
+									<i class="ti-search"></i>
+								</div>
+							</form>
+						</div>
+						<!-- end: SEARCH FORM -->
+						<!-- start: MAIN NAVIGATION MENU -->
+						<div class="navbar-title">
+							<span>Main Navigation</span>
+						</div>
+						<ul class="main-navigation-menu">
+							<li>
+								<a href="dashboard-js.html">
+									<div class="item-content">
+										<div class="item-media">
+											<i class="ti-home"></i>
+										</div>
+										<div class="item-inner">
+											<span class="title"> Dashboard </span>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="manage-patients.html">
+									<div class="item-content">
+										<div class="item-media">
+											<i class="ti-user"></i>
+										</div>
+										<div class="item-inner">
+											<span class="title"> Manage Patients </span>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="book-appointment.html">
+									<div class="item-content">
+										<div class="item-media">
+											<i class="ti-calendar"></i>
+										</div>
+										<div class="item-inner">
+											<span class="title"> Book Appointment </span>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="appointment-history.html">
+									<div class="item-content">
+										<div class="item-media">
+											<i class="ti-layers-alt"></i>
+										</div>
+										<div class="item-inner">
+											<span class="title"> Appointment History </span>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="unread-queries.html">
+									<div class="item-content">
+										<div class="item-media">
+											<i class="ti-email"></i>
+										</div>
+										<div class="item-inner">
+											<span class="title"> Unread Queries </span>
+										</div>
+									</div>
+								</a>
+							</li>
+						</ul>
+						<!-- end: MAIN NAVIGATION MENU -->
+					</nav>
+				</div>
+			</div>
+			<!-- end: SIDEBAR -->
+			
+			<div class="app-content">
+				<!-- Header -->
+				<header class="navbar navbar-default navbar-static-top">
+					<!-- start: NAVBAR HEADER -->
+					<div class="navbar-header">
+						<a href="#" class="sidebar-mobile-toggler pull-left hidden-md hidden-lg" class="btn btn-navbar sidebar-toggle" data-toggle-class="app-slide-off" data-toggle-target="#app" data-toggle-click-outside="#sidebar">
+							<i class="ti-align-justify"></i>
+						</a>
+						<a class="navbar-brand" href="#">
+							<img src="assets/images/logo.png" alt="Dental Clinic">
+						</a>
+						<a href="#" class="sidebar-toggler pull-right visible-md visible-lg" data-toggle-class="app-sidebar-closed" data-toggle-target="#app">
+							<i class="ti-align-justify"></i>
+						</a>
+						<a class="pull-right menu-toggler visible-xs-block" id="menu-toggler" data-toggle="collapse" href=".navbar-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<i class="ti-view-grid"></i>
+						</a>
+					</div>
+					<!-- end: NAVBAR HEADER -->
+					<!-- start: NAVBAR COLLAPSE -->
+					<div class="navbar-collapse collapse">
+						<ul class="nav navbar-right">
+							<!-- start: MESSAGES -->
+							<li class="dropdown">
+								<a href class="dropdown-toggle" data-toggle="dropdown">
+									<i class="ti-email"></i>
+									<span class="badge" id="unreadQueriesCount">0</span>
+								</a>
+							</li>
+							<!-- end: MESSAGES -->
+							<!-- start: USER OPTIONS -->
+							<li class="dropdown current-user">
+								<a href class="dropdown-toggle" data-toggle="dropdown">
+									<img src="assets/images/avatar-1.jpg" alt="Receptionist"> <span class="username" id="receptionistName">Receptionist</span>
+									<i class="ti-angle-down"></i>
+								</a>
+								<ul class="dropdown-menu dropdown-dark">
+									<li>
+										<a href="change-password.html">
+											Change Password
+										</a>
+									</li>
+									<li>
+										<a href="logout-js.html">
+											Log Out
+										</a>
+									</li>
+								</ul>
+							</li>
+							<!-- end: USER OPTIONS -->
+						</ul>
+						<!-- start: MENU TOGGLER FOR MOBILE DEVICES -->
+						<div class="close-handle visible-xs-block menu-toggler" data-toggle="collapse" href=".navbar-collapse">
+							<div class="arrow-left"></div>
+							<div class="arrow-right"></div>
+						</div>
+						<!-- end: MENU TOGGLER FOR MOBILE DEVICES -->
+					</div>
+					<!-- end: NAVBAR COLLAPSE -->
+				</header>
+				<!-- end: TOP NAVBAR -->
+				
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: PAGE TITLE -->
+						<section id="page-title">
+							<div class="row">
+								<div class="col-sm-8">
+									<h1 class="mainTitle">Receptionist | Appointment History</h1>
+								</div>
+								<ol class="breadcrumb">
+									<li>
+										<span>Receptionist</span>
+									</li>
+									<li class="active">
+										<span>Appointment History</span>
+									</li>
+								</ol>
+							</div>
+						</section>
+						<!-- end: PAGE TITLE -->
+						<!-- start: BASIC EXAMPLE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<div id="appointmentResult" class="appointment-result"></div>
+									<table class="table table-hover" id="appointmentTable">
+										<thead>
+											<tr>
+												<th class="center">#</th>
+												<th class="hidden-xs">Patient Name</th>
+												<th class="hidden-xs">Dentist Name</th>
+												<th>Specialization</th>
+												<th>Consultancy Fee</th>
+												<th>Appointment Date / Time </th>
+												<th>Appointment Creation Date  </th>
+												<th>Current Status</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody id="appointmentTableBody">
+											<!-- Appointment data will be loaded here -->
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<!-- end: BASIC EXAMPLE -->
+					</div>
+				</div>
+			</div>
+			<!-- start: FOOTER -->
+			<footer>
+				<div class="footer-inner">
+					<div class="pull-left">
+						&copy; <span class="current-year"></span><span class="text-bold text-uppercase"> HMS</span>. <span>All rights reserved</span>
+					</div>
+					<div class="pull-right">
+						<span class="go-top"><i class="ti-angle-up"></i></span>
+					</div>
+				</div>
+			</footer>
+			<!-- end: FOOTER -->
+		</div>
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="vendor/jquery/jquery.min.js"></script>
+		<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="vendor/modernizr/modernizr.js"></script>
+		<script src="vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="vendor/switchery/switchery.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+		<script src="vendor/maskedinput/jquery.maskedinput.min.js"></script>
+		<script src="vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+		<script src="vendor/autosize/autosize.min.js"></script>
+		<script src="vendor/selectFx/classie.js"></script>
+		<script src="vendor/selectFx/selectFx.js"></script>
+		<script src="vendor/select2/select2.min.js"></script>
+		<script src="vendor/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+		<script src="vendor/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
+		<!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="assets/js/main.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script src="assets/js/form-elements.js"></script>
+		<script>
+			jQuery(document).ready(function() {
+				Main.init();
+				FormElements.init();
+				
+				// Set current year in footer
+				document.querySelector('.current-year').textContent = new Date().getFullYear();
+				
+				// Load receptionist info
+				const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+				if (currentUser && currentUser.data) {
+					document.getElementById('receptionistName').textContent = currentUser.data.username || 'Receptionist';
+				}
+				
+				// Load all appointments
+				loadAppointmentHistory();
+			});
+			
+			function loadAppointmentHistory() {
+				try {
+					// Get all appointments
+					const appointments = HMSDatabase.getAll('appointment');
+					
+					// Get doctors for name lookup
+					const doctors = HMSDatabase.getAll('doctors');
+					
+					// Get patients for name lookup
+					const patients = HMSDatabase.getAll('tblpatient');
+					
+					// Clear existing table content
+					const tableBody = document.getElementById('appointmentTableBody');
+					tableBody.innerHTML = '';
+					
+					// Populate table with appointment data
+					appointments.forEach(function(appointment, index) {
+						// Find doctor name
+						const doctor = doctors.find(d => d.id === appointment.doctorId);
+						const doctorName = doctor ? doctor.doctorName : 'Unknown';
+						
+						// Find patient name
+						const patient = patients.find(p => p.ID === appointment.userId);
+						const patientName = patient ? patient.PatientName : 'Unknown';
+						
+						// Determine status
+						let status = 'Pending';
+						if ((appointment.userStatus === 1) && (appointment.doctorStatus === 1)) {
+							status = 'Active';
+						} else if ((appointment.userStatus === 0) && (appointment.doctorStatus === 1)) {
+							status = 'Canceled by Patient';
+						} else if ((appointment.userStatus === 1) && (appointment.doctorStatus === 0)) {
+							status = 'Canceled by Doctor';
+						} else if ((appointment.userStatus === 1) && (appointment.doctorStatus === 2)) {
+							status = 'Approved';
+						}
+						
+						// Create table row
+						const row = document.createElement('tr');
+						row.innerHTML = `
+							<td class="center">${index + 1}.</td>
+							<td class="hidden-xs">${patientName}</td>
+							<td class="hidden-xs">${doctorName}</td>
+							<td>${appointment.doctorSpecialization}</td>
+							<td>${appointment.consultancyFees}</td>
+							<td>${appointment.appointmentDate} / ${appointment.appointmentTime}</td>
+							<td>${appointment.postingDate}</td>
+							<td>${status}</td>
+							<td>
+								<div class="visible-md visible-lg hidden-sm hidden-xs">
+									${(appointment.userStatus === 1 && appointment.doctorStatus === 1) ? 
+										`<button class="btn btn-transparent btn-xs tooltips cancel-btn" data-id="${appointment.id}" title="Cancel Appointment">Cancel</button>` : 
+										'Canceled'}
+								</div>
+							</td>
+						`;
+						
+						tableBody.appendChild(row);
+					});
+					
+					// Add event listeners to cancel buttons
+					document.querySelectorAll('.cancel-btn').forEach(function(button) {
+						button.addEventListener('click', function() {
+							const appointmentId = this.getAttribute('data-id');
+							cancelAppointment(appointmentId);
+						});
+					});
+				} catch (error) {
+					console.error('Error loading appointment history:', error);
+					showResult('Error loading appointment history: ' + error.message, 'error');
+				}
+			}
+			
+			function cancelAppointment(appointmentId) {
+				if (confirm('Are you sure you want to cancel this appointment?')) {
+					try {
+						// Update appointment status in the database
+						const updatedAppointment = HMSDatabase.update('appointment', parseInt(appointmentId), {
+							userStatus: 0
+						});
+						
+						if (updatedAppointment) {
+							showResult('Appointment canceled successfully', 'success');
+							
+							// Reload appointment history
+							loadAppointmentHistory();
+						} else {
+							showResult('Error canceling appointment', 'error');
+						}
+					} catch (error) {
+						console.error('Error canceling appointment:', error);
+						showResult('Error canceling appointment: ' + error.message, 'error');
+					}
+				}
+			}
+			
+			function showResult(message, type) {
+				const resultDiv = document.getElementById('appointmentResult');
+				resultDiv.className = 'appointment-result ' + type;
+				resultDiv.innerHTML = '<p>' + message + '</p>';
+				resultDiv.style.display = 'block';
+				
+				// Hide after 5 seconds
+				setTimeout(function() {
+					resultDiv.style.display = 'none';
+				}, 5000);
+			}
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+	</body>
+</html>
